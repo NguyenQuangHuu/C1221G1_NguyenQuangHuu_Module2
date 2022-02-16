@@ -3,198 +3,97 @@ package ss1_introduction_java.bai_tap;
 import java.util.Scanner;
 
 public class SpeakNumber {
+
+    private  static String hangTram(int num,String value){
+            switch (num){
+                case 1: value+="One Hundred ";break;
+                case 2: value+="Two Hundred ";break;
+                case 3: value+="Three Hundred ";break;
+                case 4: value+="Four Hundred ";break;
+                case 5: value+="Five Hundred ";break;
+                case 6: value+="Six Hundred ";break;
+                case 7: value+="Seven Hundred ";break;
+                case 8: value+="Eight Hundred ";break;
+                case 9: value+="Nine Hundred ";break;
+            }
+            return value;
+    }
+    private static String hangChuc(int num,String value){
+            switch (num){
+                case 2: value += "Twenty ";break;
+                case 3: value += "Thirty ";break;
+                case 4: value += "Forty ";break;
+                case 5: value += "Fifty ";break;
+                case 6: value += "Sixty ";break;
+                case 7: value += "Seventy ";break;
+                case 8: value += "Eighty ";break;
+                case 9: value += "Ninety ";break;
+            }
+            return value;
+    }
+    private static String hangDonVi(int num,String value){
+
+        switch(num){
+            case 1: value += "One";break;
+            case 2: value += "Two";break;
+            case 3: value += "Three";break;
+            case 4: value += "Four";break;
+            case 5: value += "Five";break;
+            case 6: value += "Six";break;
+            case 7: value += "Seven";break;
+            case 8: value += "Eight";break;
+            case 9: value += "Nine";break;
+            case 10: value += "Ten";break;
+            case 11: value += "Eleven";break;
+            case 12: value += "Twelve";break;
+            case 13: value += "Thirteen";break;
+            case 14: value += "Fourteen";break;
+            case 15: value += "Fifteen";break;
+            case 16: value += "Sixteen";break;
+            case 17: value += "Seventeen";break;
+            case 18: value += "Eighteen";break;
+            case 19: value += "Nineteen";break;
+        }
+        return value;
+    }
     public static void main(String[] args) {
         // write your code here
         Scanner sc = new Scanner(System.in);
-        short weight = sc.nextShort();
+        int number = sc.nextInt();
         String s = "";
-        boolean checkHundreds = weight / 100 > 0;
-        boolean checkTens = weight / 10 > 0;
+        if(number>0 && number <= 999){
+            if(number > 99){
+                int hundred = number / 100;
+                int tensOf = number % 100;
 
-        if(checkHundreds) {
-            short hundred = (short) (weight / 100);
-            switch (hundred) {
-                case 1:
-                    s += "one hundred ";
-                    break;
-                case 2:
-                    s += "two hundred ";
-                    break;
-                case 3:
-                    s += "three hundred ";
-                    break;
-                case 4:
-                    s += "four hundred ";
-                    break;
-                case 5:
-                    s += "five hundred ";
-                    break;
-                case 6:
-                    s += "six hundred ";
-                    break;
-                case 7:
-                    s += "seven hundred ";
-                    break;
-                case 8:
-                    s += "eight hundred ";
-                    break;
-                case 9:
-                    s += "nine hundred ";
-                    break;
+                s += hangTram(hundred,s);
+                if(tensOf != 0){
+                    s+="And ";
+                    if(tensOf > 19){
+                        s+=hangChuc(tensOf/10,"");
+                        s+=hangDonVi(tensOf%10,"");
+                    }else{
+                        s+= hangDonVi(tensOf,"");
+                    }
+
+                }
+            }else{
+                if(number>19){
+                    if(number%10==0){
+                        s=hangChuc(number/10,"");
+                    }else{
+                        s=hangChuc(number/10,"");
+                        s+=hangDonVi(number%10,"");
+                    }
+                }else{
+                    s=hangDonVi(number,"");
+                }
             }
-        }else
-        if(checkTens){
-            s+="and ";
-            short tens = (short) (weight % 100);
-            short tensNum = (short) (tens/10);
-            short num2 = (short) (tens%10);
-            switch (tensNum){
-                case 0: switch (num2){
-                    case 1: s+="ones";break;
-                    case 2: s+="twos";break;
-                    case 3: s+="threes";break;
-                    case 4: s+="fours";break;
-                    case 5: s+="fives";break;
-                    case 6: s+="six";break;
-                    case 7: s+="sevens";break;
-                    case 8: s+="eight";break;
-                    case 9: s+="nine";break;
-                };break;
-                case 1:
-                    switch (num2){
-                        case 0: s+= "ten";break;
-                        case 1: s+= "eleven";break;
-                        case 2: s+= "twelve";break;
-                        case 3: s+= "thirteen";break;
-                        case 4: s+= "fourteen";break;
-                        case 5: s+= "fifteen";break;
-                        case 6: s+= "sixteen";break;
-                        case 7: s+= "seventeen";break;
-                        case 8: s+= "eighteen";break;
-                        case 9: s+= "nineteen";break;
-                    };break;
-                case 2: s+= "twenty ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    }
-                    break;
-                case 3: s+= "thirty ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    }
-                    break;
-                case 4: s+= "forty ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    }
-                    break;
-                case 5: s+= "fifty ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    };
-                    break;
-                case 6: s+= "sixty ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    }
-                    break;
-                case 7: s+= "seventy ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    };
-                    break;
-                case 8: s+= "eighty ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    };
-                    break;
-                case 9: s+= "ninety ";
-                    switch (num2){
-                        case 1: s+="ones";break;
-                        case 2: s+="twos";break;
-                        case 3: s+="threes";break;
-                        case 4: s+="fours";break;
-                        case 5: s+="fives";break;
-                        case 6: s+="six";break;
-                        case 7: s+="sevens";break;
-                        case 8: s+="eight";break;
-                        case 9: s+="nine";break;
-                    }
-                    break;
-            }
+        }else if(number==0){
+            s+="Zero";
+        }else{
+            s+="Out of Memory";
         }
-
-
-
-//        if(weight>99){
-//
-//            short over = (short)(weight%100);
-//
-//            if(over!=0){
-//                s+="and ";
-//                short num = (short) (over/10);
-//                short num2 = (short) (over%10);
-//
-//            }
-//        }
-
         System.out.println(s);
-
     }
 }
