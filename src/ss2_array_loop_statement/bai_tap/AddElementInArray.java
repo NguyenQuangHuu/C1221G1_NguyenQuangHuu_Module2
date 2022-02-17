@@ -25,7 +25,7 @@ public class AddElementInArray {
         System.out.println(Arrays.toString(array));
         System.out.println("Nhập vị trí muốn thêm vào");
         int index = Integer.parseInt(sc.nextLine());
-        if(index >= array.length || index < 0){Ư
+        if(index >= array.length || index < 0){
             System.out.println("Không tồn tại vị trí này trong mảng, không thể chèn");
         }else{
             for(int k = array.length-1;k>index;k--){
