@@ -23,6 +23,8 @@ public class AddElementInArray {
             i++;
         }
         System.out.println(Arrays.toString(array));
+
+
         System.out.println("Nhập vị trí muốn thêm vào");
         int index = Integer.parseInt(sc.nextLine());
         if(index >= array.length || index < 0){
