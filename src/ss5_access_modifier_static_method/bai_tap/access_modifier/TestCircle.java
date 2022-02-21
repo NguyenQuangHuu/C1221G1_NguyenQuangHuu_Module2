@@ -9,5 +9,6 @@ public class TestCircle {
         //protected truy cập được vì trong cùng package;
         //default truy cập được vì cùng package
         //public truy cập được
+
     }
 }

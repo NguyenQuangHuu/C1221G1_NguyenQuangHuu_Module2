@@ -1,18 +1,28 @@
 package ss4_class_oop.bai_tap;
 
 public class Fan {
-    private final String[] SPEED_NAME = {"LOW","MEDIUM","FAST"};
-    private final int[] SPEED_LEVEL = {1,2,3};
+//    private final String[] SPEED_NAME = {"LOW","MEDIUM","FAST"};
+//    private final int[] SPEED_LEVEL = {1,2,3};
+    private final int LOW = 1;
+    private final int MEDIUM = 2;
+    private final int FAST = 3;
     private int speed;
     private boolean on;
     private double radius;
     private String color;
 
     public Fan(){
-        this.speed = SPEED_LEVEL[0];
+        this.speed = 1 ;
         this.on = false;
         this.radius = 5;
         this.color = "blue";
+    }
+
+    public Fan(int speed,boolean on ,double radius,String color){
+        this.speed = speed;
+        this.on = on;
+        this.radius = radius;
+        this.color = color;
     }
 
     public int getSpeed() {
@@ -51,12 +61,12 @@ public class Fan {
     public String toString() {
         if(this.isOn()){
             return "Fan is on," +
-                    " speed=" + SPEED_NAME[this.getSpeed()] +
+                    " speed=" + this.getSpeed() +
                     ", radius=" + this.getRadius() +
                     ", color=" + this.getColor()  +
                      '\n';
         }else{
-            return "Fan is off, speed = "+ SPEED_NAME[this.getSpeed()] +
+            return "Fan is off, speed = "+ this.getSpeed() +
                     " , radius= "+this.getRadius()+
                     " , color = "+this.getColor()+
                     "\n";

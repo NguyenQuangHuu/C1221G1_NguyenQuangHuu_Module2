@@ -58,6 +58,7 @@ public class QuadraticEquation {
         System.out.println("Enter c");
         double c = sc.nextDouble();
         QuadraticEquation quadraticEquation = new QuadraticEquation(a,b,c);
+
         if(quadraticEquation.getDiscriminant()>0){
             System.out.println("The equation has two root : "+quadraticEquation.getRoot1() +" and "+quadraticEquation.getRoot2());
         }else if(quadraticEquation.getDiscriminant()==0){

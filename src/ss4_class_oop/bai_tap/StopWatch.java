@@ -6,7 +6,7 @@ public class StopWatch {
     private long startTime;
     private long stopTime;
     public StopWatch(){
-        this.startTime = new Date().getDate();
+        this.startTime = new Date().getTime();
     }
 
     public long getStartTime() {
@@ -25,14 +25,13 @@ public class StopWatch {
         this.stopTime = stopTime;
     }
 
-    public long start(){
+    public void start(){
         this.setStartTime(new Date().getTime());
-        return this.getStartTime();
+
     }
 
-    public long stop(){
+    public void stop(){
         this.setStopTime(new Date().getTime());
-        return this.getStopTime();
     }
     public long getElapsedTime(){
         return this.getStopTime() - this.getStartTime();
@@ -43,12 +42,12 @@ public class StopWatch {
         System.out.println(stopWatch.getStartTime());
 
         stopWatch.start();
-        for(int i = 0 ; i<10000; i++){
-            System.out.println(stopWatch.getStartTime());
+        for(int i = 0 ; i<100000; i++){
+            System.out.println(i);
         }
         stopWatch.stop();
         System.out.println(stopWatch.getStopTime());
-        System.out.println(stopWatch.getElapsedTime()*1000);
+        System.out.println(stopWatch.getElapsedTime()+" milliseconds");
     }
 }
 
