@@ -91,9 +91,11 @@ public class Print {
             for(int k=6;k>i;k--){
                 System.out.print("  ");
             }
+
             for(int k=0 ; k<i;k++){
                 System.out.print(" *");
             }
+
             for(int k=0 ; k<=i;k++){
                 System.out.print(" *");
             }
