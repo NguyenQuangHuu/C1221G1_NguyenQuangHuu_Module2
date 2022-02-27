@@ -138,10 +138,12 @@ public class VehicleImpl implements IVehicle {
     public void delete() {
         System.out.println("Nhập vào biển kiểm soát bạn muốn xóa\n");
         String numberPlate = sc.nextLine();
+        boolean checking = false;
         // Duyệt mảng motobikes
         for (int i = 0; i < motorbikes.length; i++) {
             if(motorbikes[i] instanceof Motorbike){
                 if (motorbikes[i].getNumberPlate().equals(numberPlate)) {
+                    checking =true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
                     String confirm = sc.nextLine();
@@ -167,6 +169,7 @@ public class VehicleImpl implements IVehicle {
         for (int i = 0; i < cars.length; i++) {
             if(cars[i] instanceof Car){
                 if (cars[i].getNumberPlate().equals(numberPlate)) {
+                    checking =true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
                     String confirm = sc.nextLine();
@@ -192,6 +195,7 @@ public class VehicleImpl implements IVehicle {
         for (int i = 0; i < trucks.length; i++) {
             if(trucks[i] instanceof Truck){
                 if (trucks[i].getNumberPlate().equals(numberPlate)) {
+                    checking =true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
                     String confirm = sc.nextLine();
@@ -214,6 +218,8 @@ public class VehicleImpl implements IVehicle {
 
         }
 
-
+        if(!checking){
+            System.out.println("Không tồn tại biển kiểm soát này");
+        }
     }
 }

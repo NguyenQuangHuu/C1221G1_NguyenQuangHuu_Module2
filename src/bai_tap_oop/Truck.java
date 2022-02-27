@@ -25,9 +25,8 @@ public class Truck extends Vehicle {
 
     @Override
     public String toString() {
-        return super.toString()+ ", Xe tải{" +
-                "Trọng tải =" + load +
-                '}';
+        return super.toString()+ ", " +
+                load;
     }
 
 

@@ -36,9 +36,11 @@ public class Car extends Vehicle{
 
     @Override
     public String toString() {
-        return super.toString()+", Ô tô{" +
-                " số lượng chỗ ngồi=" + numberCapacity +
-                ", Loại xe ='" + model + '\'' +
-                '}';
+        return super.getNumberPlate()+", "+
+                super.getVehicleManufacturer()+", "+
+                super.getManufacturingDate()+", "+
+                ", " + model + '\'' +
+                super.getOwner()+
+                ", " + numberCapacity;
     }
 }

@@ -50,11 +50,10 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "Phương tiện :{" +
-                "Biển kiểm soát='" + numberPlate + '\'' +
-                ", Hãng sản xuất='" + vehicleManufacturer + '\'' +
-                ", Năm xuất xưởng =" + manufacturingDate +
-                ", Chủ sở hữu='" + owner + '\'' +
+        return numberPlate +
+                ", " + vehicleManufacturer + '\'' +
+                ", " + manufacturingDate +
+                ", " + owner + '\'' +
                 '}';
     }
 }

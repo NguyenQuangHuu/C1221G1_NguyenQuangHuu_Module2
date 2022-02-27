@@ -5,16 +5,17 @@ import java.util.Scanner;
 public class VehicleTest {
     public static void main(String[] args) {
 
-
-
-
         VehicleImpl vehicleImpl = new VehicleImpl();
 
         Motorbike[] motorbikes = vehicleImpl.motorbikes;
         Motorbike motorbike = new Motorbike("43C1-251.39","Yamaha",2012,"Nguyễn Quang Hữu",125);
         motorbikes[0] = motorbike;
         Car[] cars = vehicleImpl.cars;
+        Car car = new Car("43B-453.88","Huyndai",2020,"Nguyễn Văn B",9,"Xe khách");
+        cars[0] = car;
         Truck[] trucks = vehicleImpl.trucks;
+        Truck truck = new Truck("43C-47.678","Dongfeng",2020,"Nguyễn Văn C",9);
+        trucks[0] = truck;
         final int ADD = 1;
         final int SHOW = 2;
         final int DELETE = 3;
