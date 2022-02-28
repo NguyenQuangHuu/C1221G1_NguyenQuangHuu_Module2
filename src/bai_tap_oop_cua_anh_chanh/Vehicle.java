@@ -1,4 +1,4 @@
-package bai_tap_oop;
+package bai_tap_oop_cua_anh_chanh;
 
 public abstract class Vehicle {
     private String numberPlate;
