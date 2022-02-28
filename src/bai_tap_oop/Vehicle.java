@@ -51,9 +51,9 @@ public abstract class Vehicle {
     @Override
     public String toString() {
         return numberPlate +
-                ", " + vehicleManufacturer + '\'' +
+                ", " + vehicleManufacturer +
                 ", " + manufacturingDate +
-                ", " + owner + '\'' +
-                '}';
+                ", " + owner
+                ;
     }
 }

@@ -27,9 +27,8 @@ public class Motorbike extends Vehicle {
 
     @Override
     public String toString() {
-        return super.toString()+", Xe máy{" +
-                "công suất=" + capacity +
-                '}';
+        return super.toString()+"," +
+                "công suất=" + capacity;
     }
 
 

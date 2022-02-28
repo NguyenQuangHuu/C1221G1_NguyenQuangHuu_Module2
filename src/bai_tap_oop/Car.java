@@ -38,8 +38,8 @@ public class Car extends Vehicle{
     public String toString() {
         return super.getNumberPlate()+", "+
                 super.getVehicleManufacturer()+", "+
-                super.getManufacturingDate()+", "+
-                ", " + model + '\'' +
+                super.getManufacturingDate()+
+                ", " + model + ", "+
                 super.getOwner()+
                 ", " + numberCapacity;
     }

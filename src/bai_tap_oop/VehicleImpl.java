@@ -1,17 +1,9 @@
 package bai_tap_oop;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class VehicleImpl implements IVehicle {
-    Manufacturer manufacturer = new Manufacturer("HSX-001","Yamaha","Nhật Bản");
-    Manufacturer manufacturer1 = new Manufacturer("HSX-002","Honda","Nhật Bản");
-    Manufacturer manufacturer2 = new Manufacturer("HSX-003","Dongfeng","Trung Quốc");
-    Manufacturer manufacturer3 = new Manufacturer("HSX-004","Huyndai","Hàn Quốc");
-    Manufacturer manufacturer4 = new Manufacturer("HSX-005","Ford","Mỹ");
-    Manufacturer manufacturer5 = new Manufacturer("HSX-006","Toyota","Nhật Bản");
-    Manufacturer manufacturer6 = new Manufacturer("HSX-007","Hino","Nhật Bản");
-
-    Manufacturer[] manufacturers = {manufacturer,manufacturer1,manufacturer2,manufacturer3,manufacturer4,manufacturer5,manufacturer6};
 
     Motorbike[] motorbikes = new Motorbike[20];
     Car[] cars = new Car[20];
@@ -37,6 +29,29 @@ public class VehicleImpl implements IVehicle {
 
     }
 
+    public String manufacturerChoose(int index){
+        ArrayList<Manufacturer> manufacturers = new ArrayList<>();
+
+        Manufacturer manufacturer = new Manufacturer("HSX-001","Yamaha","Nhật Bản");
+        Manufacturer manufacturer1 = new Manufacturer("HSX-002","Honda","Nhật Bản");
+        Manufacturer manufacturer2 = new Manufacturer("HSX-003","Dongfeng","Trung Quốc");
+        Manufacturer manufacturer3 = new Manufacturer("HSX-004","Huyndai","Hàn Quốc");
+        Manufacturer manufacturer4 = new Manufacturer("HSX-005","Ford","Mỹ");
+        Manufacturer manufacturer5 = new Manufacturer("HSX-006","Toyota","Nhật Bản");
+        Manufacturer manufacturer6 = new Manufacturer("HSX-007","Hino","Nhật Bản");
+        manufacturers.add(manufacturer);
+        manufacturers.add(manufacturer1);
+        manufacturers.add(manufacturer2);
+        manufacturers.add(manufacturer3);
+        manufacturers.add(manufacturer4);
+        manufacturers.add(manufacturer5);
+        manufacturers.add(manufacturer6);
+
+        return manufacturers.get(index - 1).getManufacturerName();
+    }
+
+
+
     public void input(int choice) {
 
         final int MOTORBIKE = 1;
@@ -44,8 +59,16 @@ public class VehicleImpl implements IVehicle {
         final int TRUCK = 3;
         System.out.println("Nhập biển số xe");
         String numberPlate = sc.nextLine();
-        System.out.println("Nhập hãng sản xuất");
-        String maker = sc.nextLine();
+        System.out.println("Chọn hãng sản xuất\n" +
+                "1.Yamaha\n" +
+                "2.Honda\n" +
+                "3.Dongfeng\n" +
+                "4.Huyndai\n" +
+                "5.Ford\n" +
+                "6.Toyota\n" +
+                "7.Hino\n");
+        int index = Integer.parseInt(sc.nextLine());
+        String maker = manufacturerChoose(index);
         System.out.println("Nhập năm sản xuất");
         int manufacturingDate = Integer.parseInt(sc.nextLine());
         System.out.println("Nhập chủ sở hữu");
