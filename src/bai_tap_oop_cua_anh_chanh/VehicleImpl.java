@@ -29,16 +29,16 @@ public class VehicleImpl implements IVehicle {
 
     }
 
-    public String manufacturerChoose(int index){
+    public String manufacturerChoose(int index) {
         ArrayList<Manufacturer> manufacturers = new ArrayList<>();
 
-        Manufacturer manufacturer = new Manufacturer("HSX-001","Yamaha","Nhật Bản");
-        Manufacturer manufacturer1 = new Manufacturer("HSX-002","Honda","Nhật Bản");
-        Manufacturer manufacturer2 = new Manufacturer("HSX-003","Dongfeng","Trung Quốc");
-        Manufacturer manufacturer3 = new Manufacturer("HSX-004","Huyndai","Hàn Quốc");
-        Manufacturer manufacturer4 = new Manufacturer("HSX-005","Ford","Mỹ");
-        Manufacturer manufacturer5 = new Manufacturer("HSX-006","Toyota","Nhật Bản");
-        Manufacturer manufacturer6 = new Manufacturer("HSX-007","Hino","Nhật Bản");
+        Manufacturer manufacturer = new Manufacturer("HSX-001", "Yamaha", "Nhật Bản");
+        Manufacturer manufacturer1 = new Manufacturer("HSX-002", "Honda", "Nhật Bản");
+        Manufacturer manufacturer2 = new Manufacturer("HSX-003", "Dongfeng", "Trung Quốc");
+        Manufacturer manufacturer3 = new Manufacturer("HSX-004", "Huyndai", "Hàn Quốc");
+        Manufacturer manufacturer4 = new Manufacturer("HSX-005", "Ford", "Mỹ");
+        Manufacturer manufacturer5 = new Manufacturer("HSX-006", "Toyota", "Nhật Bản");
+        Manufacturer manufacturer6 = new Manufacturer("HSX-007", "Hino", "Nhật Bản");
         manufacturers.add(manufacturer);
         manufacturers.add(manufacturer1);
         manufacturers.add(manufacturer2);
@@ -49,7 +49,6 @@ public class VehicleImpl implements IVehicle {
 
         return manufacturers.get(index - 1).getManufacturerName();
     }
-
 
 
     public void input(int choice) {
@@ -164,9 +163,9 @@ public class VehicleImpl implements IVehicle {
         boolean checking = false;
         // Duyệt mảng motobikes
         for (int i = 0; i < motorbikes.length; i++) {
-            if(motorbikes[i] instanceof Motorbike){
+            if (motorbikes[i] instanceof Motorbike) {
                 if (motorbikes[i].getNumberPlate().equals(numberPlate)) {
-                    checking =true;
+                    checking = true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
                     String confirm = sc.nextLine();
@@ -175,7 +174,7 @@ public class VehicleImpl implements IVehicle {
                         for (int k = i; k < motorbikes.length - 1; k++) {
                             motorbikes[k] = motorbikes[k + 1];
                         }
-                        motorbikes[motorbikes.length-1] = null;
+                        motorbikes[motorbikes.length - 1] = null;
                         System.out.println("Xóa thành công");
                     } else if (confirm.equals("NO")) {
                         break;
@@ -190,9 +189,9 @@ public class VehicleImpl implements IVehicle {
 
         // Duyệt mảng cars
         for (int i = 0; i < cars.length; i++) {
-            if(cars[i] instanceof Car){
+            if (cars[i] instanceof Car) {
                 if (cars[i].getNumberPlate().equals(numberPlate)) {
-                    checking =true;
+                    checking = true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
                     String confirm = sc.nextLine();
@@ -201,7 +200,7 @@ public class VehicleImpl implements IVehicle {
                         for (int k = i; k < cars.length - 1; k++) {
                             cars[k] = cars[k + 1];
                         }
-                        cars[cars.length-1]=null;
+                        cars[cars.length - 1] = null;
                         System.out.println("Xóa thành công");
                     } else if (confirm.equals("NO")) {
                         break;
@@ -216,9 +215,9 @@ public class VehicleImpl implements IVehicle {
 
         // Duyệt mảng motobikes
         for (int i = 0; i < trucks.length; i++) {
-            if(trucks[i] instanceof Truck){
+            if (trucks[i] instanceof Truck) {
                 if (trucks[i].getNumberPlate().equals(numberPlate)) {
-                    checking =true;
+                    checking = true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
                     String confirm = sc.nextLine();
@@ -228,7 +227,7 @@ public class VehicleImpl implements IVehicle {
                             trucks[k] = trucks[k + 1];
 
                         }
-                        trucks[trucks.length-1]=null;
+                        trucks[trucks.length - 1] = null;
                         System.out.println("Xóa thành công");
                     } else if (confirm.equals("NO")) {
                         break;
@@ -241,7 +240,7 @@ public class VehicleImpl implements IVehicle {
 
         }
 
-        if(!checking){
+        if (!checking) {
             System.out.println("Không tồn tại biển kiểm soát này");
         }
     }
