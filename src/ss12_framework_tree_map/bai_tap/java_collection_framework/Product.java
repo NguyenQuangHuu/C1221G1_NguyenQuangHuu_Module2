@@ -50,7 +50,7 @@ public class Product{
 
     @Override
     public String toString() {
-        return "Product : "+this.getNameProduct()+" , quantity : "+this.getQuantity()+" , price: "+this.getPrice();
+        return "Product : id: "+this.getIdProduct()+", product name: "+this.getNameProduct()+" , quantity : "+this.getQuantity()+" , price: "+this.getPrice();
     }
 
 }
