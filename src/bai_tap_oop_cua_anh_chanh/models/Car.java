@@ -1,6 +1,6 @@
-package bai_tap_oop_cua_anh_chanh;
+package bai_tap_oop_cua_anh_chanh.models;
 
-public class Car extends Vehicle{
+public class Car extends Vehicle {
     private int numberCapacity;
     private String model;
 

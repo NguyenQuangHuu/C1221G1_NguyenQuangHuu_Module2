@@ -1,9 +1,14 @@
-package bai_tap_oop_cua_anh_chanh;
+package bai_tap_oop_cua_anh_chanh.controllers;
+
+import bai_tap_oop_cua_anh_chanh.models.Car;
+import bai_tap_oop_cua_anh_chanh.models.Motorbike;
+import bai_tap_oop_cua_anh_chanh.models.Truck;
+import bai_tap_oop_cua_anh_chanh.services.impl.VehicleImpl;
 
 import java.util.Scanner;
 
-public class VehicleTest {
-    public static void main(String[] args) {
+public class VehicleController {
+    public  void display() {
 
         VehicleImpl vehicleImpl = new VehicleImpl();
 

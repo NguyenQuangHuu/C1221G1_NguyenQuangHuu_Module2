@@ -1,4 +1,4 @@
-package bai_tap_oop_cua_anh_chanh;
+package bai_tap_oop_cua_anh_chanh.models;
 
 public class Truck extends Vehicle {
     private int load;

@@ -1,13 +1,19 @@
-package bai_tap_oop_cua_anh_chanh;
+package bai_tap_oop_cua_anh_chanh.services.impl;
+
+import bai_tap_oop_cua_anh_chanh.models.Car;
+import bai_tap_oop_cua_anh_chanh.models.Manufacturer;
+import bai_tap_oop_cua_anh_chanh.models.Motorbike;
+import bai_tap_oop_cua_anh_chanh.models.Truck;
+import bai_tap_oop_cua_anh_chanh.services.IVehicle;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class VehicleImpl implements IVehicle {
 
-    Motorbike[] motorbikes = new Motorbike[20];
-    Car[] cars = new Car[20];
-    Truck[] trucks = new Truck[20];
+    public Motorbike[] motorbikes = new Motorbike[20];
+    public Car[] cars = new Car[20];
+    public Truck[] trucks = new Truck[20];
 
     Scanner sc = new Scanner(System.in);
 

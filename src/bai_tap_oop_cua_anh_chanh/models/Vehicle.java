@@ -1,4 +1,4 @@
-package bai_tap_oop_cua_anh_chanh;
+package bai_tap_oop_cua_anh_chanh.models;
 
 public abstract class Vehicle {
     private String numberPlate;
