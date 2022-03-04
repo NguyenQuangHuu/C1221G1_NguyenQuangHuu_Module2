@@ -1,28 +1,35 @@
 package ss13_searching_algorithm.bai_tap.biggest_string;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class BiggestString {
     public static void main(String[] args) {
-        String str = "Welcome";
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhập chuỗi: ");
+        String str = sc.nextLine();
 
-        LinkedList<Integer> chars = new LinkedList<>();
+        LinkedList<Character> chars = new LinkedList<>();
 
-        for (int i = 0; i <  str.length(); i++) {
-            chars.add((int) str.charAt(i));
-        }
+        for (int i = 0; i < str.length(); i++) {
 
-
-        
-        System.out.println(chars);
-        Queue<Character> queue = new LinkedList<>();
-        for(int i = 0 ; i<str.length()-1;i++){
-            if(str.charAt(i)<str.charAt(i+1)){
-                queue.add(str.charAt(i));
+            LinkedList<Character> temp = new LinkedList<>();
+            temp.add(str.charAt(i));
+            for (int j = i + 1; j < str.length(); j++) {
+                if (str.charAt(j) > temp.getLast()) {
+                    temp.add(str.charAt(j));
+                }
 
             }
+            if (temp.size() > chars.size()) {
+                chars.clear();
+                chars.addAll(temp);
+            }
+
         }
-        System.out.println(queue);
+
+        chars.forEach(System.out::print);
     }
 }
