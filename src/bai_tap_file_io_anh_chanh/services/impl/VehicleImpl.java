@@ -2,9 +2,11 @@ package bai_tap_file_io_anh_chanh.services.impl;
 
 import bai_tap_file_io_anh_chanh.models.*;
 import bai_tap_file_io_anh_chanh.services.IVehicle;
+import bai_tap_file_io_anh_chanh.utils.NotFoundVehicleException;
 import bai_tap_file_io_anh_chanh.utils.ReadAndWriteFile;
 import bai_tap_file_io_anh_chanh.utils.Validate;
 import com.sun.deploy.cache.BaseLocalApplicationProperties;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
 
 import java.util.*;
@@ -80,8 +82,16 @@ public class VehicleImpl implements IVehicle {
                 "6.Toyota\n" +
                 "7.Hino\n" +
                 "Lựa chọn của bạn:");
-
+//        int index = 0;
+//        try{
+//            index = Integer.parseInt(sc.nextLine());
+//        }catch (NumberFormatException e){
+//            System.out.println("Vui lòng nhập số theo danh sách phía trên");
+//            System.out.println("Nhập lại");
+//            index = Integer.parseInt(sc.nextLine());
+//        }
         int index = Integer.parseInt(sc.nextLine());
+
         String maker = manufacturerChoose(index);
         System.out.println("Nhập năm sản xuất");
         int manufacturingDate = Integer.parseInt(sc.nextLine());
@@ -95,10 +105,20 @@ public class VehicleImpl implements IVehicle {
                     System.out.println("Nhập biển số xe");
                     numberPlateMotorbike = sc.nextLine();
                     motorbikePlateChecking = validate.numberPlateMotorbikeValidate(numberPlateMotorbike);
+                    if(!motorbikePlateChecking){
+                        try{
+                            throw new NotFoundVehicleException("Không tồn tại biển kiểm soát này");
+                        }catch(NotFoundVehicleException e){
+                            System.out.println(e.getMessage());
+                            System.out.println("Vui lòng nhập lại");
+                        }
+                    }
                 } while (!motorbikePlateChecking);
                 Motorbike motorbike = new Motorbike(numberPlateMotorbike, maker, manufacturingDate, ownerName, capacity);
                 motorbikes.add(motorbike);
                 readAndWriteFile.writeFile(MOTORBIKES_LIST, motorbikes, false);
+                System.out.println("Thêm thành công. Nhấn Enter để quay lại menu chính");
+                sc.nextLine();
                 break;
             case CAR:
                 System.out.println("Nhập kiểu xe");
@@ -115,10 +135,20 @@ public class VehicleImpl implements IVehicle {
                     System.out.println("Nhập biển số xe");
                     numberPlateCar = sc.nextLine();
                     carPlateChecking = validate.numberPlateCarValidate(numberPlateCar,carTypes.get(model - 1).toString());
+                    if(!carPlateChecking){
+                        try{
+                            throw new NotFoundVehicleException("Không tồn tại biển kiểm soát này");
+                        }catch(NotFoundVehicleException e){
+                            System.out.println(e.getMessage());
+                            System.out.println("Vui lòng nhập lại");
+                        }
+                    }
                 } while (!carPlateChecking);
                 Car car = new Car(numberPlateCar, maker, manufacturingDate, ownerName, numberCapacity, carTypes.get(model - 1).toString());
                 cars.add(car);
                 readAndWriteFile.writeFile(CARS_LIST, cars, false);
+                System.out.println("Thêm thành công. Nhấn Enter để quay lại menu chính");
+                sc.nextLine();
                 break;
             case TRUCK:
                 System.out.println("Nhập trọng tải của xe tải");
@@ -128,11 +158,25 @@ public class VehicleImpl implements IVehicle {
                 do {
                     System.out.println("Nhập biển số xe");
                     numberPlateTruck = sc.nextLine();
-                    truckPlateChecking = validate.numberPlateTruckValidate(numberPlateTruck);
+
+                        truckPlateChecking = validate.numberPlateTruckValidate(numberPlateTruck);
+                        if(!truckPlateChecking){
+                            try{
+                                throw new NotFoundVehicleException("Biển kiểm soát không tồn tại");
+                            }catch(NotFoundVehicleException e){
+                                System.out.println(e.getMessage());
+                                System.out.println("Vui lòng nhập lại");
+
+                            }
+
+                    }
+
                 } while (!truckPlateChecking);
                 Truck truck = new Truck(numberPlateTruck, maker, manufacturingDate, ownerName, loadTruck);
                 trucks.add(truck);
                 readAndWriteFile.writeFile(TRUCKS_LIST, trucks, false);
+                System.out.println("Thêm thành công. Nhấn Enter để quay lại menu chính");
+                sc.nextLine();
                 break;
         }
 
@@ -156,7 +200,6 @@ public class VehicleImpl implements IVehicle {
                     }
 
                 }
-                ;
                 break;
             case 2:
                 for (Car car : cars
@@ -166,7 +209,6 @@ public class VehicleImpl implements IVehicle {
                     }
 
                 }
-                ;
                 break;
             case 3:
                 for (Truck truck : trucks
@@ -175,7 +217,6 @@ public class VehicleImpl implements IVehicle {
                         System.out.println(truck);
                     }
                 }
-                ;
                 break;
             case 4:
                 break;
@@ -196,17 +237,24 @@ public class VehicleImpl implements IVehicle {
                     checking = true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
-                    String confirm = sc.nextLine();
-                    if ("OK".equals(confirm)) {
-                        motorbikes.remove(currentObjectMotorbike);
-                        System.out.println("Xóa thành công");
-                        readAndWriteFile.writeFile(MOTORBIKES_LIST,motorbikes,false);
-                    } else if ("NO".equals(confirm)) {
-                        break;
-                    } else {
-                        System.out.println("Sai cú pháp vui lòng thử lại");
-                        break;
-                    }
+                    String confirm;
+
+                    do{
+                        confirm = sc.nextLine();
+                        if ("OK".equals(confirm)) {
+                            motorbikes.remove(currentObjectMotorbike);
+                            System.out.println("Xóa thành công");
+                            readAndWriteFile.writeFile(MOTORBIKES_LIST,motorbikes,false);
+                            System.out.println("Nhấn Enter để quay về màn hình chính");
+                            sc.nextLine();
+
+                        } else if ("NO".equals(confirm)) {
+                            System.out.println("Đã hủy thao tác xóa");
+                            break;
+                        }else{
+                            System.out.println("Sai cú pháp vui lòng thử lại");
+                        }
+                    }while (!confirm.equals("OK"));
                 }
         }
 
@@ -217,17 +265,24 @@ public class VehicleImpl implements IVehicle {
                     checking = true;
                     System.out.println("Bạn xác nhận muốn xóa phương tiện này ?\n" +
                             "Nhập OK để xác nhận hoặc NO để hủy đi việc xóa");
-                    String confirm = sc.nextLine();
-                    if ("OK".equals(confirm)) {
-                        cars.remove(currentObjectCar);
-                        System.out.println("Xóa thành công");
-                        readAndWriteFile.writeFile(CARS_LIST,cars,false);
-                    } else if ("NO".equals(confirm)) {
-                        break;
-                    } else {
-                        System.out.println("Sai cú pháp vui lòng thử lại");
-                        break;
-                    }
+                    String confirm;
+
+                    do{
+                        confirm = sc.nextLine();
+                        if ("OK".equals(confirm)) {
+                            cars.remove(currentObjectCar);
+                            System.out.println("Xóa thành công");
+                            readAndWriteFile.writeFile(CARS_LIST,cars,false);
+                            System.out.println("Nhấn Enter để quay về màn hình chính");
+                            sc.nextLine();
+
+                        } else if ("NO".equals(confirm)) {
+                            System.out.println("Đã hủy thao tác xóa");
+                            break;
+                        }else{
+                            System.out.println("Sai cú pháp vui lòng thử lại");
+                        }
+                    }while (!confirm.equals("OK"));
                 }
         }
 
@@ -247,6 +302,9 @@ public class VehicleImpl implements IVehicle {
                             trucks.remove(currentObject);
                             System.out.println("Xóa thành công");
                             readAndWriteFile.writeFile(TRUCKS_LIST,trucks,false);
+                            System.out.println("Nhấn Enter để quay về màn hình chính");
+                            sc.nextLine();
+
                         } else if ("NO".equals(confirm)) {
                             System.out.println("Đã hủy thao tác xóa");
                             break;
