@@ -5,9 +5,6 @@ import bai_tap_file_io_anh_chanh.services.IVehicle;
 import bai_tap_file_io_anh_chanh.utils.NotFoundVehicleException;
 import bai_tap_file_io_anh_chanh.utils.ReadAndWriteFile;
 import bai_tap_file_io_anh_chanh.utils.Validate;
-import com.sun.deploy.cache.BaseLocalApplicationProperties;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 
 import java.util.*;
 
@@ -101,11 +98,19 @@ public class VehicleImpl implements IVehicle {
                 int capacity = Integer.parseInt(sc.nextLine());
                 String numberPlateMotorbike;
                 boolean motorbikePlateChecking;
+                boolean checkMotorbikeNumberPlate;
                 do {
                     System.out.println("Nhập biển số xe");
                     numberPlateMotorbike = sc.nextLine();
+                    checkMotorbikeNumberPlate = this.checkExistNumberPlate(numberPlateMotorbike);
                     motorbikePlateChecking = validate.numberPlateMotorbikeValidate(numberPlateMotorbike);
-                    if(!motorbikePlateChecking){
+                    //Kiểm tra khi biển số hợp lệ
+                    if(motorbikePlateChecking){
+                        //kiểm tra sự tồn tại của biển số
+                        if(checkMotorbikeNumberPlate){
+                            System.out.println("Biển số xe này đã tồn tại! vui lòng nhập lại");
+                        }
+                    }else{
                         try{
                             throw new NotFoundVehicleException("Không tồn tại biển kiểm soát này");
                         }catch(NotFoundVehicleException e){
@@ -113,13 +118,19 @@ public class VehicleImpl implements IVehicle {
                             System.out.println("Vui lòng nhập lại");
                         }
                     }
-                } while (!motorbikePlateChecking);
+                } while (!motorbikePlateChecking || checkMotorbikeNumberPlate);
                 Motorbike motorbike = new Motorbike(numberPlateMotorbike, maker, manufacturingDate, ownerName, capacity);
                 motorbikes.add(motorbike);
                 readAndWriteFile.writeFile(MOTORBIKES_LIST, motorbikes, false);
                 System.out.println("Thêm thành công. Nhấn Enter để quay lại menu chính");
-                sc.nextLine();
-                break;
+                String enter = sc.nextLine();
+                do{
+                    if(enter.equals("")){
+                        break;
+                    }else{
+                        System.out.print("Không tìm được phím enter à bro! Nhập lại đi");
+                    }
+                }while (true);
             case CAR:
                 System.out.println("Nhập kiểu xe");
                 for (int i = 0; i < carTypes.size(); i++) {
@@ -131,36 +142,56 @@ public class VehicleImpl implements IVehicle {
 
                 System.out.println("Nhập số chỗ ngồi của xe");
                 int numberCapacity = Integer.parseInt(sc.nextLine());
+                boolean checkExist;
                 do {
                     System.out.println("Nhập biển số xe");
                     numberPlateCar = sc.nextLine();
                     carPlateChecking = validate.numberPlateCarValidate(numberPlateCar,carTypes.get(model - 1).toString());
-                    if(!carPlateChecking){
-                        try{
-                            throw new NotFoundVehicleException("Không tồn tại biển kiểm soát này");
-                        }catch(NotFoundVehicleException e){
-                            System.out.println(e.getMessage());
-                            System.out.println("Vui lòng nhập lại");
+                    checkExist = this.checkExistNumberPlate(numberPlateCar);
+                    if(carPlateChecking){
+                        if(checkExist){
+                            System.out.println("Đã tồn tại biển số xe này");
                         }
+                    }else{
+                            try{
+                                throw new NotFoundVehicleException("Không tồn tại biển kiểm soát này");
+                            }catch(NotFoundVehicleException e){
+                                System.out.println(e.getMessage());
+                                System.out.println("Vui lòng nhập lại");
+                            }
+
                     }
-                } while (!carPlateChecking);
+
+                } while (!carPlateChecking || checkExist);
                 Car car = new Car(numberPlateCar, maker, manufacturingDate, ownerName, numberCapacity, carTypes.get(model - 1).toString());
                 cars.add(car);
                 readAndWriteFile.writeFile(CARS_LIST, cars, false);
                 System.out.println("Thêm thành công. Nhấn Enter để quay lại menu chính");
-                sc.nextLine();
-                break;
+                String enter1 = sc.nextLine();
+                do{
+                    if(enter1.equals("")){
+                        break;
+                    }else{
+                        System.out.print("Không tìm được phím enter à bro! Nhập lại đi");
+                    }
+                }while (true);
             case TRUCK:
                 System.out.println("Nhập trọng tải của xe tải");
                 int loadTruck = Integer.parseInt(sc.nextLine());
                 String numberPlateTruck;
                 boolean truckPlateChecking;
+                boolean truckExist;
                 do {
                     System.out.println("Nhập biển số xe");
                     numberPlateTruck = sc.nextLine();
 
                         truckPlateChecking = validate.numberPlateTruckValidate(numberPlateTruck);
-                        if(!truckPlateChecking){
+                        truckExist = this.checkExistNumberPlate(numberPlateTruck);
+                    if (truckPlateChecking) {
+                        if(truckExist){
+                            System.out.println("Đã tồn tại biển số");
+                        }
+                    }else {
                             try{
                                 throw new NotFoundVehicleException("Biển kiểm soát không tồn tại");
                             }catch(NotFoundVehicleException e){
@@ -168,7 +199,6 @@ public class VehicleImpl implements IVehicle {
                                 System.out.println("Vui lòng nhập lại");
 
                             }
-
                     }
 
                 } while (!truckPlateChecking);
@@ -176,8 +206,14 @@ public class VehicleImpl implements IVehicle {
                 trucks.add(truck);
                 readAndWriteFile.writeFile(TRUCKS_LIST, trucks, false);
                 System.out.println("Thêm thành công. Nhấn Enter để quay lại menu chính");
-                sc.nextLine();
-                break;
+                String enter2 = sc.nextLine();
+                do{
+                    if(enter2.equals("")){
+                        break;
+                    }else{
+                        System.out.print("Không tìm được phím enter à bro! Nhập lại đi");
+                    }
+                }while (true);
         }
 
     }
@@ -314,9 +350,29 @@ public class VehicleImpl implements IVehicle {
                     }while (!confirm.equals("OK"));
                 }
         }
-
         if (!checking) {
             System.out.println("Không tồn tại biển kiểm soát này");
         }
+    }
+
+    public boolean checkExistNumberPlate(String numberPlate){
+        boolean checkExist = false;
+        for (Motorbike motorbike:motorbikes) {
+            if(motorbike.getNumberPlate().equals(numberPlate)){
+                checkExist = true;
+            }
+        }
+        for (Car car:cars) {
+            if(car.getNumberPlate().equals(numberPlate)){
+                checkExist = true;
+            }
+        }
+        for (Truck truck:trucks) {
+            if(truck.getNumberPlate().equals(numberPlate)){
+                checkExist = true;
+            }
+        }
+
+        return checkExist;
     }
 }

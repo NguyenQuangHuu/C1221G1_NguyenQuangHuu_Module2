@@ -24,4 +24,10 @@ public class Validate {
         return Pattern.matches(regEx,numberPlate);
     }
 
+
+    public boolean nameOwnerValidate(String name){
+        String regEx = "(([\\p{Lu}]|[A-Z])([\\p{Ll}]|[a-z])+)(\\s([\\p{Lu}]|[A-Z])([\\p{Ll}]|[a-z])+)*";
+
+        return Pattern.matches(regEx,name);
+    }
 }
