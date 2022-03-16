@@ -6,34 +6,35 @@ import case_study_module_2.models.facility.House;
 import case_study_module_2.models.facility.Room;
 import case_study_module_2.models.facility.Villa;
 import case_study_module_2.services.IFacilityService;
+import case_study_module_2.utils.FacilityComparator;
 import case_study_module_2.utils.Validate;
 
 import java.util.*;
 
 public class FacilityServiceImpl implements IFacilityService {
     Scanner sc = new Scanner(System.in);
-    static Map<String,Integer> rentType = new LinkedHashMap<>();
+    static Map<Facility,Integer> facilityIntegerMap = new TreeMap<>(new FacilityComparator());
 
-    ArrayList<Facility> facilityArrayList = new ArrayList<>();
+    static ArrayList<Facility> facilityArrayList = new ArrayList<>();
 
     Validate validate = new Validate();
 
-//    static{
-//        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
-//        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
-//        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
-//        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
-//        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
-//        for (int i = 0; i < facilityArrayList.size(); i++) {
-//            if(!rentType.containsKey(facilityArrayList.get(i).getServiceName())) {
-//                rentType.put(facilityArrayList.get(i).getServiceName(), 1);
-//            }else{
-//                rentType.replace(facilityArrayList.get(i).getServiceName(),rentType.get(facilityArrayList.get(i).getServiceName())+1);
-//            }
-//        }
-//        System.out.println(rentType);
-//
-//    }
+    static{
+        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("Room-1",25.0,100.0,4,"ngày","hồ bơi, phòng gym, ăn sáng"));
+        for (int i = 0; i < facilityArrayList.size(); i++) {
+            if(!facilityIntegerMap.containsKey(facilityArrayList.get(i))) {
+                facilityIntegerMap.put(facilityArrayList.get(i), 1);
+            }else{
+                facilityIntegerMap.replace(facilityArrayList.get(i),facilityIntegerMap.get(facilityArrayList.get(i))+1);
+            }
+        }
+        System.out.println(facilityIntegerMap);
+
+    }
 
     final int VILLA = 1;
     final int HOUSE = 2;
@@ -68,13 +69,13 @@ public class FacilityServiceImpl implements IFacilityService {
         do{
             usableCheck = sc.nextLine();
             usable = Double.parseDouble(usableCheck);
-        }while (!validate.positiveTensNumberValidate(usableCheck) && usable <= 30 );
+        }while (validate.positiveTensNumberValidate(usableCheck) && usable <= 30 );
 
         System.out.println("Rent fee: ");
         String rentFee;
         do{
             rentFee = sc.nextLine();
-        }while (!validate.positiveTensNumberValidate(rentFee));
+        }while (validate.positiveTensNumberValidate(rentFee));
         double rent = Double.parseDouble(rentFee);
 
         System.out.println("Capacity: ");
@@ -83,7 +84,7 @@ public class FacilityServiceImpl implements IFacilityService {
         do{
             numberCapacity = sc.nextLine();
             capacity = Integer.parseInt(numberCapacity);
-        }while (!validate.positiveNumberValidate(numberCapacity) && !(capacity>20 || capacity<=0));
+        }while (validate.positiveNumberValidate(numberCapacity) && !(capacity>20 || capacity<=0));
 
 
         System.out.println("Type Service: ");
@@ -104,7 +105,7 @@ public class FacilityServiceImpl implements IFacilityService {
                 do{
                     areaUsable = sc.nextLine();
                     swimmingPool = Double.parseDouble(areaUsable);
-                }while (!validate.positiveTensNumberValidate(areaUsable) && swimmingPool <= 30 );
+                }while (validate.positiveTensNumberValidate(areaUsable) && swimmingPool <= 30 );
 
                 System.out.println("Number of Floor:");
                 String numbersOfFloor;
@@ -112,7 +113,7 @@ public class FacilityServiceImpl implements IFacilityService {
                 do{
                     numbersOfFloor = sc.nextLine();
 
-                }while(!validate.positiveNumberValidate(numbersOfFloor));
+                }while(validate.positiveNumberValidate(numbersOfFloor));
                 floor = Integer.parseInt(numbersOfFloor);
                 Villa villa = new Villa(name,usable,rent,capacity,type,kindOfRoom,swimmingPool,floor);
                 facilityArrayList.add(villa);
@@ -125,7 +126,12 @@ public class FacilityServiceImpl implements IFacilityService {
                 }while(!validate.stringValidate(roomTypes));
 
                 System.out.println("Number of Floor: ");
-                int number = Integer.parseInt(sc.nextLine());
+                String numberString;
+                int number;
+                do{
+                    numberString = sc.nextLine();
+                    number = Integer.parseInt(numberString);
+                }while (validate.positiveNumberValidate(numberString));
                 House house = new House(name,usable,rent,capacity,type,roomTypes,number);
                 facilityArrayList.add(house);
                 break;
@@ -155,12 +161,13 @@ public class FacilityServiceImpl implements IFacilityService {
 
     @Override
     public void displayMaintenance() {
-        Iterator<String> iterator = rentType.keySet().iterator();
+        Iterator<Facility> iterator = facilityIntegerMap.keySet().iterator();
         while(iterator.hasNext()){
-            String key = iterator.next();
-            if(rentType.get(key)>=5){
-                System.out.println(key + " : "+rentType.get(key));
+            Facility key = iterator.next();
+            if(facilityIntegerMap.get(key)>=5){
+                System.out.println(facilityIntegerMap.containsKey(key)+" : "+facilityIntegerMap.get(key));
             }
         }
+
     }
 }

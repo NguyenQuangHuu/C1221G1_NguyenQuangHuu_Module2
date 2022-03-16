@@ -40,17 +40,17 @@ public class Validate {
 //        return Pattern.matches(POSITIVE_TENS_NUMBER,area);
 //    }
 //
-    public boolean rentFee(String fee){
-        String regEx = "[+]?\\d*\\.?\\d*";
-        return Pattern.matches(regEx,fee);
-    }
+//    public boolean rentFee(String fee){
+//        String regEx = "[+]?\\d*\\.?\\d*";
+//        return Pattern.matches(regEx,fee);
+//    }
 
     public boolean positiveNumberValidate(String checkingString){
-        return Pattern.matches(POSITIVE_NUMBER,checkingString);
+        return !Pattern.matches(POSITIVE_NUMBER, checkingString);
     }
 
     public boolean positiveTensNumberValidate(String checkingString){
-        return Pattern.matches(POSITIVE_TENS_NUMBER,checkingString);
+        return !Pattern.matches(POSITIVE_TENS_NUMBER, checkingString);
     }
 
     public boolean validateDate(String checkingString){

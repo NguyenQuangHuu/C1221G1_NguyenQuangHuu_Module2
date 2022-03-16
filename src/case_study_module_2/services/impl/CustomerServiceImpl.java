@@ -45,7 +45,7 @@ public class CustomerServiceImpl implements ICustomerService {
         String address = sc.nextLine();
         Customer customer = new Customer(id,fullName,dob,gender,idPassport,phoneNumber,email,membership,address);
         customerArrayList.add(customer);
-        customerArrayList.add(new Customer("1","Nguyễn văn B","12/12","Nam",123456,"0987654321","abc@gmail.com",memberships[0],"Việt Nam"));
+//        customerArrayList.add(new Customer("1","Nguyễn văn B","12/12","Nam",123456,"0987654321","abc@gmail.com",memberships[0],"Việt Nam"));
     }
 
 
