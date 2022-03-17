@@ -1,0 +1,4 @@
+package demo_case_study.services;
+
+public interface IContractService {
+}
