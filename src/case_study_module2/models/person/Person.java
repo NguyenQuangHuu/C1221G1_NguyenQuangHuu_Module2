@@ -84,4 +84,14 @@ public abstract class Person {
     public String toString() {
         return "Person{}";
     }
+
+    public String personToString(){
+        return this.getId() +
+                " ," + this.getFullName() +
+                " ," + this.getDayOfBirth()+
+                " ," + this.getGender() +
+                " ," + this.getPassportID() +
+                " ," + this.getPhoneNumber() +
+                " ,"+this.getEmail();
+    }
 }

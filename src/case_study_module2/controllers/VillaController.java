@@ -2,6 +2,9 @@ package case_study_module2.controllers;
 
 import case_study_module2.models.facility.Villa;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VillaController extends FacilityController{
 
     protected String idVilla;
@@ -15,7 +18,7 @@ public class VillaController extends FacilityController{
         kindOfRoom = kindOfRoom();
         swimmingPool = usableAreaSwimmingPoolInput();
         numberFloor = numberFloor();
-        return new Villa(serviceName,usableArea,rentExpense,maximumCapacity,rentType,kindOfRoom,swimmingPool,numberFloor);
+        return new Villa(idVilla,serviceName,usableArea,rentExpense,maximumCapacity,rentType,kindOfRoom,swimmingPool,numberFloor);
     }
 
     public String idVillaInput(){
@@ -56,5 +59,14 @@ public class VillaController extends FacilityController{
             usableDouble = Double.parseDouble(usable);
         }while(!validate.positiveTensNumberValidate(usable) && usableDouble <=30 );
         return usableDouble;
+    }
+
+    public List<String> writeVillaToCSV(List<Villa> villas){
+        List<String> stringList = new ArrayList<>();
+        for (Villa villa:
+             villas) {
+            stringList.add(villa.facilityToString());
+        }
+        return stringList;
     }
 }

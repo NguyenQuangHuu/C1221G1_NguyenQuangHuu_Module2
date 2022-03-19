@@ -1,4 +1,9 @@
 package case_study_module2.services;
 
-public interface IContractService {
+import case_study_module2.models.Contract;
+
+import java.util.List;
+
+public interface IContractService extends IServices {
+
 }

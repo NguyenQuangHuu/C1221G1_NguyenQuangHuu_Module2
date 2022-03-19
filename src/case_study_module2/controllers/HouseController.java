@@ -3,6 +3,9 @@ package case_study_module2.controllers;
 
 import case_study_module2.models.facility.House;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HouseController extends FacilityController {
     protected String houseIdService;
     protected String kindOfRoom;
@@ -13,7 +16,7 @@ public class HouseController extends FacilityController {
         houseIdService = idHouseInput();
         kindOfRoom = kindOfRoom();
         numberFloor = numberFloor();
-        return new House(serviceName,usableArea,rentExpense,maximumCapacity,rentType,houseIdService,kindOfRoom,numberFloor);
+        return new House(houseIdService,serviceName,usableArea,rentExpense,maximumCapacity,rentType,kindOfRoom,numberFloor);
     }
 
     public String idHouseInput(){
@@ -42,5 +45,14 @@ public class HouseController extends FacilityController {
 
         }while (!validate.positiveNumberValidate(floor));
         return Integer.parseInt(floor);
+    }
+
+    public List<String> writeHouseToCSV(List<House> houses){
+        List<String> stringList = new ArrayList<>();
+        for (House house:
+             houses) {
+            stringList.add(house.facilityToString());
+        }
+        return stringList;
     }
 }

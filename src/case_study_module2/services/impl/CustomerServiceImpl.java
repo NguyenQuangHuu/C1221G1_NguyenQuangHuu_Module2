@@ -4,19 +4,24 @@ import case_study_module2.controllers.CustomerController;
 import case_study_module2.models.enums.Membership;
 import case_study_module2.models.person.Customer;
 import case_study_module2.services.ICustomerService;
+import case_study_module2.utils.ReadAndWriteFile;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements ICustomerService {
-
+    final String CUSTOMERS_FILE = "src\\case_study_module2\\data\\customers.csv";
+    ReadAndWriteFile readAndWriteFile = new ReadAndWriteFile();
     Scanner sc = new Scanner(System.in);
     CustomerController customerController = new CustomerController();
-    LinkedList<Customer> customerArrayList = new LinkedList<>();
+    List<Customer> customerArrayList = readAndWriteFile.readFileCustomer(CUSTOMERS_FILE);
 
     @Override
     public void add() {
         customerArrayList.add(customerController.getCustomerInput());
+        readAndWriteFile.writeFile(CUSTOMERS_FILE,customerController.writeCustomerToCSV(customerArrayList));
 //        System.out.println("Customer ID");
 //        String id = sc.nextLine();
 //        System.out.println("Customer's full name:");
@@ -105,5 +110,6 @@ public class CustomerServiceImpl implements ICustomerService {
                 }
             }
         }
+        readAndWriteFile.writeFile(CUSTOMERS_FILE,customerController.writeCustomerToCSV(customerArrayList));
     }
 }

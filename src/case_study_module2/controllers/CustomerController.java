@@ -2,6 +2,7 @@ package case_study_module2.controllers;
 
 import case_study_module2.models.enums.Membership;
 import case_study_module2.models.person.Customer;
+import case_study_module2.models.person.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,13 @@ public class CustomerController extends PersonControllers{
         return sc.nextLine();
     }
 
-    public void searchByNameService(String name){
-
+    public List<String> writeCustomerToCSV(List<Customer> customerList){
+        List<String> stringList = new ArrayList<>();
+        for (Customer customer:
+                customerList) {
+            stringList.add(customer.personToString());
+        }
+        return stringList;
     }
 
 }

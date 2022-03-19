@@ -1,8 +1,6 @@
 package case_study_module2.controllers;
 
 import case_study_module2.models.enums.RentType;
-import case_study_module2.models.facility.Facility;
-import case_study_module2.models.facility.Villa;
 import case_study_module2.utils.Validate;
 
 import java.util.Scanner;

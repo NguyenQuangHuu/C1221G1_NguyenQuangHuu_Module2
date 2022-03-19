@@ -65,7 +65,21 @@ public abstract class Facility {
 
     @Override
     public String toString() {
-        return "Tên dịch vụ : "+this.getServiceName()+" , diện tích sử dụng: "+this.getUsableArea();
+        return "Facility{" +
+                "serviceName='" + serviceName + '\'' +
+                ", usableArea=" + usableArea +
+                ", rentExpense=" + rentExpense +
+                ", maximumCapacity=" + maximumCapacity +
+                ", rentType=" + rentType +
+                '}';
+    }
+
+    public String facilityToString() {
+        return serviceName +
+                " ,"+usableArea+
+                " ,"+rentExpense+
+                " ,"+maximumCapacity+
+                " ,"+rentType;
     }
 
     @Override

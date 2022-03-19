@@ -47,6 +47,21 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Mã nhân viên :" + this.getId() + " , họ và tên: " + this.getFullName() + " , giới tính: " + this.getGender() + " , trình độ học vấn " + this.getEducationLevel() + " , chức vụ: " + this.getWorkPosition() + " , CMND : " + this.getPassportID() + " , số điện thoại: " + this.getPhoneNumber() + " , email: "+this.getEmail();
+        return "Mã nhân viên :" + this.getId() +
+                " , họ và tên: " + this.getFullName() +
+                " , giới tính: " + this.getGender() +
+                " , trình độ học vấn " + this.getEducationLevel() +
+                " , chức vụ: " + this.getWorkPosition() +
+                " , CMND : " + this.getPassportID() +
+                " , số điện thoại: " + this.getPhoneNumber() +
+                " , email: "+this.getEmail();
+    }
+
+    @Override
+    public String personToString() {
+        return super.personToString()+
+                " ,"+getEducationLevel()+
+                " ,"+getWorkPosition()+
+                " ,"+getSalary();
     }
 }

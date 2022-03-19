@@ -7,41 +7,46 @@ import case_study_module2.controllers.VillaController;
 import case_study_module2.models.enums.RentType;
 import case_study_module2.models.facility.Facility;
 
+import case_study_module2.models.facility.House;
 import case_study_module2.models.facility.Room;
 import case_study_module2.models.facility.Villa;
 import case_study_module2.services.IFacilityService;
+import case_study_module2.utils.ReadAndWriteFile;
 import case_study_module2.utils.Validate;
 
 import java.util.*;
 
 public class FacilityServiceImpl implements IFacilityService {
+    ReadAndWriteFile readAndWriteFile = new ReadAndWriteFile();
     Scanner sc = new Scanner(System.in);
-    static Map<Facility,Integer> facilityMap = new LinkedHashMap<>();
 
-    static List<Facility> facilityArrayList = new ArrayList<>();
+    final String VILLAS_FILE = "src\\case_study_module2\\data\\villas.csv";
+    final String HOUSE_FILE = "src\\case_study_module2\\data\\houses.csv";
+    final String ROOMS_FILE = "src\\case_study_module2\\data\\rooms.csv";
+
+
+    public Map<Facility,Integer> facilityMap = new LinkedHashMap<>();
+
+    public List<Facility> facilityArrayList = new ArrayList<>();
+
+    List<Villa> villas = readAndWriteFile.readFileVilla(VILLAS_FILE);
+    List<House> houses = readAndWriteFile.readFileHouse(HOUSE_FILE);
+    List<Room> rooms = readAndWriteFile.readFileRoom(ROOMS_FILE);
+
 
     Validate validate = new Validate();
+
+
+
     VillaController villaController = new VillaController();
     HouseController houseController = new HouseController();
     RoomController roomController = new RoomController();
-    static{
-        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
-        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
-        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
-        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
-        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
-        for (int i = 0; i < facilityArrayList.size(); i++) {
-            if(!facilityMap.containsKey(facilityArrayList.get(i))) {
-                facilityMap.put(facilityArrayList.get(i), 1);
-            }else{
-                facilityMap.replace(facilityArrayList.get(i),facilityMap.get((facilityArrayList.get(i)))+1);
-            }
-
-        }
-
-        System.out.println(facilityMap);
-
-    }
+//    static{
+//
+//
+//
+//
+//    }
 
     final String VILLA = "1";
     final String HOUSE = "2";
@@ -50,6 +55,7 @@ public class FacilityServiceImpl implements IFacilityService {
 
     @Override
     public void add() {
+
         String choice;
         do{
             System.out.println("Choose your services:\n" +
@@ -66,13 +72,16 @@ public class FacilityServiceImpl implements IFacilityService {
         }
         switch (choice){
             case VILLA:
-                facilityArrayList.add(villaController.villaInput());
+                villas.add(villaController.villaInput());
+                readAndWriteFile.writeFile(VILLAS_FILE,villaController.writeVillaToCSV(villas));
                 break;
             case HOUSE:
-                facilityArrayList.add(houseController.houseInput());
+                houses.add(houseController.houseInput());
+                readAndWriteFile.writeFile(HOUSE_FILE,houseController.writeHouseToCSV(houses));
                 break;
             case ROOM:
-                facilityArrayList.add(roomController.roomInput());
+                rooms.add(roomController.roomInput());
+                readAndWriteFile.writeFile(ROOMS_FILE,roomController.writeRoomToCSV(rooms));
                 break;
             case EXIT:
                 break;
@@ -167,6 +176,9 @@ public class FacilityServiceImpl implements IFacilityService {
 
     @Override
     public void show() {
+        facilityArrayList.addAll(villas);
+        facilityArrayList.addAll(houses);
+        facilityArrayList.addAll(rooms);
         facilityArrayList.forEach(System.out::println);
     }
 
@@ -174,6 +186,21 @@ public class FacilityServiceImpl implements IFacilityService {
 
     @Override
     public void displayMaintenance() {
+        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
+        facilityArrayList.add(new Room("SVRO-1234","Room-1",25.0,100.0,4,RentType.Day,"hồ bơi, phòng gym, ăn sáng"));
+        for (int i = 0; i < facilityArrayList.size(); i++) {
+            if(!facilityMap.containsKey(facilityArrayList.get(i))) {
+                facilityMap.put(facilityArrayList.get(i), 1);
+            }else{
+                facilityMap.replace(facilityArrayList.get(i),facilityMap.get((facilityArrayList.get(i)))+1);
+            }
+
+        }
+
+        System.out.println(facilityMap);
             Iterator<Facility> iterator = facilityMap.keySet().iterator();
             while(iterator.hasNext()){
                 Facility key = iterator.next();

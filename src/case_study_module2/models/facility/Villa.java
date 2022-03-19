@@ -2,7 +2,7 @@ package case_study_module2.models.facility;
 
 import case_study_module2.models.enums.RentType;
 
-public class Villa extends  Facility{
+public class Villa extends Facility {
     private String serviceId;
     private String sortOfRoom;
     private double swimmingPoolArea;
@@ -11,15 +11,16 @@ public class Villa extends  Facility{
     public Villa() {
     }
 
-    public Villa(String serviceId,String sortOfRoom, double swimmingPoolArea, int numberOfFloors) {
+    public Villa(String serviceId, String sortOfRoom, double swimmingPoolArea, int numberOfFloors) {
         this.serviceId = serviceId;
         this.sortOfRoom = sortOfRoom;
         this.swimmingPoolArea = swimmingPoolArea;
         this.numberOfFloors = numberOfFloors;
     }
 
-    public Villa(String serviceName, double usableArea, double rentExpense, int maximumCapacity, RentType rentType, String sortOfRoom, double swimmingPoolArea, int numberOfFloors) {
+    public Villa(String serviceId, String serviceName, double usableArea, double rentExpense, int maximumCapacity, RentType rentType, String sortOfRoom, double swimmingPoolArea, int numberOfFloors) {
         super(serviceName, usableArea, rentExpense, maximumCapacity, rentType);
+        this.serviceId = serviceId;
         this.sortOfRoom = sortOfRoom;
         this.swimmingPoolArea = swimmingPoolArea;
         this.numberOfFloors = numberOfFloors;
@@ -65,6 +66,14 @@ public class Villa extends  Facility{
                 ", swimmingPoolArea=" + swimmingPoolArea +
                 ", numberOfFloors=" + numberOfFloors +
                 '}';
+    }
+
+    @Override
+    public String facilityToString() {
+        return super.facilityToString()+ " ," +
+                sortOfRoom + " ," +
+                swimmingPoolArea + " ," +
+                numberOfFloors;
     }
 
 }

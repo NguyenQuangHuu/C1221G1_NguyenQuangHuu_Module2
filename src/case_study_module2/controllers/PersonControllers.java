@@ -1,8 +1,12 @@
 package case_study_module2.controllers;
 
 import case_study_module2.models.enums.Gender;
+import case_study_module2.models.person.Employee;
+import case_study_module2.models.person.Person;
 import case_study_module2.utils.Validate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PersonControllers {
@@ -33,7 +37,7 @@ public class PersonControllers {
         String id;
         boolean checkId;// sử dụng để check tồn tại id
         do {
-            System.out.println("ID:");
+            System.out.print("ID: ");
             id = sc.nextLine();
         } while (!validate.positiveNumberValidate(id));
         return id;
@@ -41,7 +45,7 @@ public class PersonControllers {
 
 
     public String nameInput() {
-        System.out.println("Enter his/her name:");
+        System.out.print("Enter his/her name: ");
         boolean nameValidate;
         String name;
         do {
@@ -52,7 +56,7 @@ public class PersonControllers {
     }
 
     public String dayOfBirth() {
-        System.out.println("Enter his/her birthday:");
+        System.out.print("Enter his/her birthday: ");
         String dayOfBirth;
         do {
             dayOfBirth = sc.nextLine();
@@ -64,7 +68,7 @@ public class PersonControllers {
     }
 
     public Gender genderInput() {
-        System.out.println("Choose gender:");
+        System.out.print("Choose gender: ");
         for (int i = 0; i < Gender.values().length; i++) {
             System.out.println((i + 1) + " : " + Gender.values()[i]);
         }
@@ -74,31 +78,31 @@ public class PersonControllers {
     }
 
     public String passportInput() {
-        System.out.println("Enter his/her passport id:");
+        System.out.print("Enter his/her passport id: ");
         String passportId;
         do {
             passportId = sc.nextLine();
             if (!validate.positiveNumberValidate(passportId) || passportId.length() != 9) {
                 System.out.println("Wrong format! Please re-type");
             }
-        } while (!validate.validateDate(passportId) || passportId.length() != 9);
+        } while (!validate.positiveNumberValidate(passportId) || passportId.length() != 9);
         return passportId;
     }
 
     public String phoneNumberInput() {
-        System.out.println("Enter his/her phone number:");
+        System.out.print("Enter his/her phone number: ");
         String phoneNumber;
         do {
             phoneNumber = sc.nextLine();
             if (!validate.positiveNumberValidate(phoneNumber) || phoneNumber.length() != 9) {
                 System.out.println("Wrong format! Please re-type");
             }
-        } while (!validate.validateDate(phoneNumber) || phoneNumber.length() != 9);
+        } while (!validate.positiveNumberValidate(phoneNumber) || phoneNumber.length() != 9);
         return phoneNumber;
     }
 
     public String emailInput() {
-        System.out.println("Enter his/her email:");
+        System.out.print("Enter his/her email: ");
         String email;
         do {
             email = sc.nextLine();
@@ -108,6 +112,15 @@ public class PersonControllers {
         } while (!validate.validateEmail(email));
         return email;
     }
+
+//    public List<String> writePersonToCSV(List<Person> personList){
+//        List<String> stringList = new ArrayList<>();
+//        for (Person person:
+//                personList) {
+//            stringList.add(person.personToString());
+//        }
+//        return stringList;
+//    }
 
 
 }

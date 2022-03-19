@@ -36,4 +36,11 @@ public class Customer extends Person{
     public String toString() {
         return "Customer{}";
     }
+
+    @Override
+    public String personToString() {
+        return super.personToString()+
+                " ,"+this.getTypeMembership()+
+                " ,"+this.getAddress();
+    }
 }

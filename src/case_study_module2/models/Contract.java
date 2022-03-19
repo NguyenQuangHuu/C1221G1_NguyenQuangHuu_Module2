@@ -61,10 +61,20 @@ public class Contract {
 
     @Override
     public String toString() {
-        return "Contract{}";
+        return "Contract{" +
+                "contractId='" + contractId + '\'' +
+                ", bookingId='" + bookingId + '\'' +
+                ", customerDeposits=" + customerDeposits +
+                ", totalPayment=" + totalPayment +
+                ", customerId='" + customerId + '\'' +
+                '}';
     }
 
-    public String writeToCSV(){
-        return customerId+",";
+    public String contractToString(){
+        return customerId+
+                " ,"+bookingId+
+                " ,"+customerDeposits+
+                " ,"+totalPayment+
+                " ,"+customerId;
     }
 }
