@@ -2,9 +2,6 @@ package case_study_module2.services.impl;
 
 import case_study_module2.controllers.BookingController;
 import case_study_module2.models.Booking;
-import case_study_module2.models.enums.RentType;
-import case_study_module2.models.facility.Facility;
-import case_study_module2.models.person.Customer;
 import case_study_module2.services.IBookingService;
 import case_study_module2.utils.BookingComparator;
 import case_study_module2.utils.ReadAndWriteFile;
@@ -13,23 +10,18 @@ import java.util.*;
 
 public class BookingServiceImpl implements IBookingService {
     final String BOOKINGS_FILE = "src\\case_study_module2\\data\\bookings.csv";
-    Scanner sc = new Scanner(System.in);
-    CustomerServiceImpl customerService = new CustomerServiceImpl();
-    FacilityServiceImpl facilityService = new FacilityServiceImpl();
     BookingController bookingController = new BookingController();
     ReadAndWriteFile readAndWriteFile = new ReadAndWriteFile();
-    List<Booking> bookingList = readAndWriteFile.readFileBooking(BOOKINGS_FILE);
-    List<Customer> customers = customerService.customerArrayList;
-    List<Facility> facilityList = facilityService.facilityArrayList;
-
+    Set<Booking> bookingList = readAndWriteFile.readFileBooking(BOOKINGS_FILE);
     Set<Booking> bookingSet = new TreeSet<>(new BookingComparator());
-    Map<Facility,Integer> facilityIntegerMap = new LinkedHashMap<>();
-
 
     @Override
     public void add() {
-        bookingList.add(bookingController.addBooking());
-        readAndWriteFile.writeFile(BOOKINGS_FILE,bookingController.writeBookingToCSV(bookingList));
+        Booking book = bookingController.addBooking();
+        bookingList.add(book);
+        bookingSet.add(book);
+        System.out.println("Create new success");
+        readAndWriteFile.writeBookingFile(BOOKINGS_FILE,bookingController.writeBookingToCSV(bookingSet));
 //        System.out.println("Booking Id:");
 //        String idBooking = sc.nextLine();
 //

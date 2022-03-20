@@ -34,16 +34,18 @@ public class FacilityController {
             try{
                 choose = Integer.parseInt(sc.nextLine());
             }catch (NumberFormatException e){
-                System.out.println("Wrong format.");
+                System.err.println("Wrong format. Please Re-type");
+                choose = Integer.parseInt(sc.nextLine());
             }
         }
         return RentType.values()[choose];
     }
 
     public String serviceNameInput(){
-        System.out.println("Enter service name:");
+
         String serviceName;
         do{
+            System.out.println("Enter service name:");
             serviceName = sc.nextLine();
         }while (!validate.nameValidate(serviceName));
         return serviceName;
@@ -79,7 +81,7 @@ public class FacilityController {
         System.out.println("Enter maximum capacity:");
         do{
             capacity = sc.nextLine();
-        }while (!validate.positiveNumberValidate(capacity));
+        }while (!validate.positiveNumberValidate(capacity) || Integer.parseInt(capacity)>=20 || Integer.parseInt(capacity)<=0);
         return Integer.parseInt(capacity);
     }
 

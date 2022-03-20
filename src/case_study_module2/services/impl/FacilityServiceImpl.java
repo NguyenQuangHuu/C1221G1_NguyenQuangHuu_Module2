@@ -41,12 +41,6 @@ public class FacilityServiceImpl implements IFacilityService {
     VillaController villaController = new VillaController();
     HouseController houseController = new HouseController();
     RoomController roomController = new RoomController();
-//    static{
-//
-//
-//
-//
-//    }
 
     final String VILLA = "1";
     final String HOUSE = "2";
@@ -66,7 +60,7 @@ public class FacilityServiceImpl implements IFacilityService {
             System.out.print("Your choice");
             choice = sc.nextLine();
         }while (!validate.positiveNumberValidate(choice));
-        while (!validate.positiveNumberValidate(choice)){
+        while (!validate.positiveNumberValidate(choice) || Integer.parseInt(choice)<0 ||Integer.parseInt(choice)>3){
             System.out.println("Wrong input ! Re-type");
             choice = sc.nextLine();
         }
@@ -85,7 +79,6 @@ public class FacilityServiceImpl implements IFacilityService {
                 break;
             case EXIT:
                 break;
-                default: System.out.println("Wrong input! Re-type");
         }
 //        System.out.println("Name Services: ");
 //        String name;

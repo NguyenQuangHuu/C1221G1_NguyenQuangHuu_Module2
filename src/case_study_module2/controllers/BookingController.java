@@ -5,20 +5,19 @@ import case_study_module2.models.enums.RentType;
 import case_study_module2.models.facility.Facility;
 import case_study_module2.models.person.Customer;
 import case_study_module2.services.impl.FacilityServiceImpl;
+import case_study_module2.utils.BookingComparator;
 import case_study_module2.utils.ReadAndWriteFile;
 import case_study_module2.utils.Validate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BookingController {
 
-    protected String idBooking;
+    protected int idBooking;
     protected String startDay;
     protected String endDay;
     protected String customerId;
-    protected String serviceName;
+    protected Facility serviceName;
     protected RentType rentType;
 
     final String CUSTOMERS_FILE = "src\\case_study_module2\\data\\customers.csv";
@@ -28,21 +27,25 @@ public class BookingController {
     Scanner sc = new Scanner(System.in);
     ReadAndWriteFile readAndWriteFile = new ReadAndWriteFile();
     List<Customer> customerList = readAndWriteFile.readFileCustomer(CUSTOMERS_FILE);
-    List<Facility> facilities =  new FacilityServiceImpl().facilityArrayList;
-
+    Set<Booking> bookingSet = new TreeSet<>(new BookingComparator());
+    Map<Facility,Integer> facilityIntegerMap = new LinkedHashMap<>();
     public Booking addBooking(){
-        this.idBooking = idBookingInput();
+        this.idBooking = idBookingInput(bookingSet);
         this.startDay = startDayInput();
         this.endDay = endDayInput();
         this.customerId = customerIdInput();
         this.serviceName = serviceNameInput();
         this.rentType = rentTypeInput();
         return new Booking(idBooking,startDay,endDay,customerId,serviceName,rentType);
+
     }
 
-    public String idBookingInput(){
-        System.out.print("Enter booking Id: ");
-        return sc.nextLine();
+    public int idBookingInput(Set<Booking> set){
+        int id = 1;
+        if(!set.isEmpty()){
+            id = set.size();
+        }
+        return id;
     }
 
     public String startDayInput(){
@@ -70,28 +73,65 @@ public class BookingController {
         customerList.forEach(System.out::println);
         System.out.println("Enter customer id");
         String customerId = sc.nextLine();
+        boolean check = false;
+        while(!check){
+            while("".equals(customerId)){
+                System.out.println("Please do not skip this field");
+                customerId = sc.nextLine();
+            }
+            for (Customer customer:
+                 customerList) {
+                if(customerId.equals(customer.getId())){
+                    check = true;
+                    break;
+                }
+            }
+            if(!check){
+                System.out.println("NO exist! Please Re-type");
+                customerId = sc.nextLine();
+            }
+        }
 
-        return sc.nextLine();
+        return customerId;
     }
 
 
-    public String serviceNameInput(){
-        facilities.forEach(System.out::println);
-        System.out.print("Enter service name: ");
+    public Facility serviceNameInput(){
+        System.out.println("Facility List:");
+
+        for (Facility facility:
+             readAndWriteFile.readFileVilla("src\\case_study_module2\\data\\villas.csv")) {
+            facilityIntegerMap.put(facility,1);
+        }
+
+        for(Map.Entry<Facility,Integer> facility : facilityIntegerMap.entrySet()){
+            System.out.println(facility.getKey().toString());
+        }
+
+        System.out.print("Enter facility name: ");
         String serviceName = sc.nextLine();
-        String result =null;
+
         boolean check = false;
-        for (Facility facility : facilities) {
-            if (facility.getServiceName().equals(serviceName)) {
-                result = serviceName;
-                check = true;
-                break;
+        Facility facilityResult = null;
+        while(!check){
+            while("".equals(serviceName)){
+                System.out.println("Please do not skip this field");
+                serviceName = sc.nextLine();
+            }
+            for(Map.Entry<Facility,Integer> facility : facilityIntegerMap.entrySet()){
+                if (facility.getKey().getServiceName().equals(serviceName)) {
+                    check = true;
+                    facilityResult = facility.getKey();
+                }
+            }
+
+            if(!check){
+                System.out.println("No exist your result");
+                serviceName = sc.nextLine();
             }
         }
-        if(!check){
-            System.out.println("No exist your result");
-        }
-        return result;
+
+        return facilityResult;
     }
 
     public RentType rentTypeInput(){
@@ -103,8 +143,8 @@ public class BookingController {
         return RentType.values()[index];
     }
 
-    public List<String> writeBookingToCSV(List<Booking> bookings){
-        List<String> stringList = new ArrayList<>();
+    public Set<String> writeBookingToCSV(Set<Booking> bookings){
+        Set<String> stringList = new TreeSet<>();
         for (Booking booking:
              bookings) {
             stringList.add(booking.bookingToString());
@@ -113,9 +153,10 @@ public class BookingController {
     }
 
 
-    public void displayBooking(List<Booking> bookingList){
+    public void displayBooking(Set<Booking> bookingSet){
         System.out.println("Booking List");
-        bookingList.forEach(System.out::println);
+
+        bookingSet.forEach(System.out::println);
     }
 
 }

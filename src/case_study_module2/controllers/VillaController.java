@@ -22,9 +22,9 @@ public class VillaController extends FacilityController{
     }
 
     public String idVillaInput(){
-        System.out.println("Enter Service ID");
         String idVilla;
         do{
+            System.out.println("Enter Service ID");
             idVilla = sc.nextLine();
         }while (!validate.validateIdServiceVilla(idVilla));
         return sc.nextLine();

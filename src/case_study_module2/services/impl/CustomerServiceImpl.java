@@ -16,7 +16,13 @@ public class CustomerServiceImpl implements ICustomerService {
     ReadAndWriteFile readAndWriteFile = new ReadAndWriteFile();
     Scanner sc = new Scanner(System.in);
     CustomerController customerController = new CustomerController();
-    List<Customer> customerArrayList = readAndWriteFile.readFileCustomer(CUSTOMERS_FILE);
+    List<Customer> customerArrayList = customersLinkedList();
+
+    public LinkedList<Customer> customersLinkedList(){
+        LinkedList<Customer> customerList = new LinkedList<>();
+        customerList = readAndWriteFile.readFileCustomer(CUSTOMERS_FILE);
+        return customerList;
+    }
 
     @Override
     public void add() {

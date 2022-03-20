@@ -3,6 +3,7 @@ package case_study_module2.utils;
 import case_study_module2.models.Booking;
 import case_study_module2.models.Contract;
 import case_study_module2.models.enums.*;
+import case_study_module2.models.facility.Facility;
 import case_study_module2.models.facility.House;
 import case_study_module2.models.facility.Room;
 import case_study_module2.models.facility.Villa;
@@ -10,19 +11,62 @@ import case_study_module2.models.person.Customer;
 import case_study_module2.models.person.Employee;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ReadAndWriteFile {
 
     final String CUSTOMERS_FILE = "src\\case_study_module2\\data\\customers.csv";
     final String BOOKINGS_FILE = "src\\case_study_module2\\data\\bookings.csv";
     final String CONTRACTS_FILE = "src\\case_study_module2\\data\\contracts.csv";
+    final String VILLAS_FILE = "src\\case_study_module2\\data\\villas.csv";
+    final String HOUSE_FILE = "src\\case_study_module2\\data\\houses.csv";
+    final String ROOMS_FILE = "src\\case_study_module2\\data\\rooms.csv";
+
 
 
     public void writeFile(String pathFile, List<String> list) {
         File file = new File(pathFile);
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        try {
+            fileWriter = new FileWriter(file);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            for (String str :
+                    list) {
 
+                bufferedWriter.write(str);
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bufferedWriter.close();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public void writeBookingFile(String pathFile, Set<String> list) {
+        File file = new File(pathFile);
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
@@ -54,6 +98,14 @@ public class ReadAndWriteFile {
 
         File file = new File(pathFile);
 
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -73,11 +125,17 @@ public class ReadAndWriteFile {
         return employeeList;
     }
 
-    public List<Customer> readFileCustomer(String pathFile) {
-        List<Customer> customerList = new ArrayList<>();
+    public LinkedList<Customer> readFileCustomer(String pathFile) {
+        LinkedList<Customer> customerList = new LinkedList<>();
 
         File file = new File(pathFile);
-
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -101,7 +159,13 @@ public class ReadAndWriteFile {
         List<Villa> villas = new ArrayList<>();
 
         File file = new File(pathFile);
-
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -125,7 +189,13 @@ public class ReadAndWriteFile {
         List<House> houses = new ArrayList<>();
 
         File file = new File(pathFile);
-
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -149,7 +219,13 @@ public class ReadAndWriteFile {
         List<Room> rooms = new ArrayList<>();
 
         File file = new File(pathFile);
-
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -169,11 +245,17 @@ public class ReadAndWriteFile {
         return rooms;
     }
 
-    public List<Booking> readFileBooking(String pathFile) {
-        List<Booking> bookings = new ArrayList<>();
+    public Set<Booking> readFileBooking(String pathFile) {
+        Set<Booking> bookings = new TreeSet<>(new BookingComparator());
 
         File file = new File(pathFile);
-
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -183,7 +265,7 @@ public class ReadAndWriteFile {
             String[] strings;
             while ((line = bufferedReader.readLine()) != null) {
                 strings = line.split(" ,");
-                bookings.add(new Booking(strings[0],strings[1],strings[2],strings[3],strings[4],RentType.valueOf(strings[5])));
+                bookings.add(new Booking(Integer.parseInt(strings[0]),strings[1],strings[2],strings[3], this.convert(strings[4]),RentType.valueOf(strings[5])));
             }
             ;
         } catch (IOException e) {
@@ -193,13 +275,35 @@ public class ReadAndWriteFile {
         return bookings;
     }
 
+    public Facility convert(String str){
+        List<Facility> facilityList = new ArrayList<>();
+        facilityList.addAll(this.readFileVilla(VILLAS_FILE));
+        facilityList.addAll(this.readFileHouse(HOUSE_FILE));
+        facilityList.addAll(this.readFileRoom(ROOMS_FILE));
+        Facility result = null;
+
+        for (Facility facility:
+             facilityList) {
+            if(str.equals(facility.getServiceName())){
+                result = facility;
+            }
+        }
+        return  result;
+    }
+
 
 
     public List<Contract> readFileContract(String pathFile) {
         List<Contract> contracts = new ArrayList<>();
 
         File file = new File(pathFile);
-
+        if(!file.exists()){
+            try {
+                throw new UserException("File not found");
+            } catch (UserException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -218,4 +322,6 @@ public class ReadAndWriteFile {
 
         return contracts;
     }
+
+
 }

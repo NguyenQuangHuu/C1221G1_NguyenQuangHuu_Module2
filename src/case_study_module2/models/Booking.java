@@ -1,32 +1,33 @@
 package case_study_module2.models;
 
 import case_study_module2.models.enums.RentType;
+import case_study_module2.models.facility.Facility;
 
 public class Booking {
-    private String bookingId;
+    private int bookingId;
     private String startsDay;
     private String endsDay;
     private String customerId;
-    private String serviceName;
+    private Facility facilityName;
     private RentType typeService;
 
     public Booking() {
     }
 
-    public Booking(String bookingId, String startsDay, String endsDay, String customerId, String serviceName, RentType typeService) {
+    public Booking(int bookingId, String startsDay, String endsDay, String customerId, Facility facilityName, RentType typeService) {
         this.bookingId = bookingId;
         this.startsDay = startsDay;
         this.endsDay = endsDay;
         this.customerId = customerId;
-        this.serviceName = serviceName;
+        this.facilityName = facilityName;
         this.typeService = typeService;
     }
 
-    public String getBookingId() {
+    public int getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(String bookingId) {
+    public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
     }
 
@@ -54,12 +55,12 @@ public class Booking {
         this.customerId = customerId;
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public Facility getFacilityName() {
+        return facilityName;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setFacilityName(Facility facilityName) {
+        this.facilityName = facilityName;
     }
 
     public RentType getTypeService() {
@@ -77,7 +78,7 @@ public class Booking {
                 ", startsDay='" + startsDay + '\'' +
                 ", endsDay='" + endsDay + '\'' +
                 ", customerId='" + customerId + '\'' +
-                ", serviceName='" + serviceName + '\'' +
+                ", serviceName='" + facilityName + '\'' +
                 ", typeService=" + typeService +
                 '}';
     }
@@ -87,7 +88,7 @@ public class Booking {
                 " ," + startsDay +
                 " ," + endsDay +
                 " ," + customerId +
-                " ," + serviceName +
+                " ," + facilityName.getServiceName() +
                 " ," + typeService;
     }
 }

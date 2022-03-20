@@ -1,13 +1,8 @@
 package case_study_module2.controllers;
 
-import case_study_module2.services.IBookingService;
-import case_study_module2.services.ICustomerService;
-import case_study_module2.services.IEmployeeService;
-import case_study_module2.services.IFacilityService;
-import case_study_module2.services.impl.BookingServiceImpl;
-import case_study_module2.services.impl.CustomerServiceImpl;
-import case_study_module2.services.impl.EmployeeServiceImpl;
-import case_study_module2.services.impl.FacilityServiceImpl;
+import case_study_module2.services.*;
+import case_study_module2.services.impl.*;
+import case_study_module2.utils.UserException;
 import case_study_module2.utils.Validate;
 
 import java.util.Scanner;
@@ -19,8 +14,10 @@ public class FuramaController {
     ICustomerService customerService = new CustomerServiceImpl();
     IFacilityService facilityService = new FacilityServiceImpl();
     IBookingService bookingService =  new BookingServiceImpl();
+    IContractService contractService = new ContractServiceImpl();
     public void displayMainMenu(){
-        String choice;
+        int choice = -1;
+
         do{
             System.out.println("Menu.\n" +
                     "1.Employee Management\n" +
@@ -29,24 +26,47 @@ public class FuramaController {
                     "4.Booking Management\n" +
                     "5.Promotion Management\n" +
                     "0.Exit\n");
-            System.out.print("Enter your choice");
-            choice = sc.nextLine();
-            while (!validate.positiveNumberValidate(choice)){
-                System.out.println("Wrong format! Re-type");
-                choice = sc.nextLine();
+            System.out.print("Enter your choice: ");
+            boolean check = false;
+            while(!check || choice<0||choice>5){
+                try{
+                    choice = Integer.parseInt(sc.nextLine());
+                    check = true;
+                }catch (NumberFormatException numberFormatException){
+                    try {
+                        throw new UserException("Do not type character\n" +
+                                "Please re-type:");
+                    } catch (UserException e) {
+                        System.out.print(e.getMessage());
+                    }
+                }
             }
 
+//            try{
+//                choiceNumber = Integer.parseInt(choice);
+//            }catch (NumberFormatException numberFormatException){
+//                try {
+//                    throw new UserException("Please do not type character");
+//                } catch (UserException e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            }
+//            while (!validate.positiveNumberValidate(choice) || choiceNumber < 0 || choiceNumber>5){
+//                System.out.println("Wrong format! Re-type");
+//                choice = sc.nextLine();
+//            }
+
             switch(choice){
-                case "1":displayEmployeeMenu();break;
-                case "2":displayCustomerMenu();break;
-                case "3":displayFacilityMenu();break;
-                case "4":displayBookingMenu();break;
-                case "5":displayPromotionMenu();break;
-                case "0":break;
+                case 1:displayEmployeeMenu();break;
+                case 2:displayCustomerMenu();break;
+                case 3:displayFacilityMenu();break;
+                case 4:displayBookingMenu();break;
+                case 5:displayPromotionMenu();break;
+                case 0:break;
                 default:
                     System.out.print("Wrong input ! Re-Type:");
             }
-        }while (!choice.equals("0"));
+        }while (true);
 
     }
 
@@ -137,19 +157,18 @@ public class FuramaController {
                     "0.Return main menu\n");
             System.out.println("Enter your choice");
             chooseBooking = sc.nextLine();
-            while (!validate.positiveNumberValidate(chooseBooking)){
+            while (!validate.positiveNumberValidate(chooseBooking) || Integer.parseInt(chooseBooking)<0 || Integer.parseInt(chooseBooking)>5){
                 System.out.println("Wrong input ! Re-Type");
                 chooseBooking = sc.nextLine();
             }
             switch (chooseBooking){
                 case "1":bookingService.add();break;
-                case "2":break;
-                case "3":break;
-                case "4":break;
-                case "5":break;
+                case "2":bookingService.display();break;
+                case "3":contractService.add();break;
+                case "4":contractService.show();break;
+                case "5":contractService.update();break;
                 case "0":break;
-                default:
-                    System.out.println("Wrong input ! Re-Type");
+
             }
         }while(!chooseBooking.equals("0"));
     }

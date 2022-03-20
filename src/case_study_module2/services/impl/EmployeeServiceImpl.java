@@ -1,8 +1,7 @@
 package case_study_module2.services.impl;
 
 import case_study_module2.controllers.EmployeeController;
-import case_study_module2.models.enums.Levels;
-import case_study_module2.models.enums.Position;
+
 import case_study_module2.models.person.Employee;
 import case_study_module2.services.IEmployeeService;
 import case_study_module2.utils.ReadAndWriteFile;

@@ -11,6 +11,7 @@ import case_study_module2.utils.Validate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ContractController  {
     Scanner sc  = new Scanner(System.in);
@@ -18,7 +19,7 @@ public class ContractController  {
     Validate validate = new Validate();
     final String BOOKINGS_FILE = "src\\case_study_module2\\data\\bookings.csv";
     final String CUSTOMERS_FILE = "src\\case_study_module2\\data\\customers.csv";
-    List<Booking> bookingList= readAndWriteFile.readFileBooking(BOOKINGS_FILE);
+    Set<Booking> bookingList=  readAndWriteFile.readFileBooking(BOOKINGS_FILE);
     List<Customer> customerList = readAndWriteFile.readFileCustomer(CUSTOMERS_FILE);
     public Contract inputContract(){
         String contractId = contractIdInput();

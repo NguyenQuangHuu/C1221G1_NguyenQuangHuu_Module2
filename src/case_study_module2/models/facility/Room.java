@@ -34,14 +34,15 @@ public class Room extends Facility{
 
     @Override
     public String toString() {
-        return super.toString()+", Room{" +
+        return super.toString()+" , Room{" +
                 "freeServices='" + freeServices + '\'' +
                 '}';
     }
 
     @Override
     public String facilityToString() {
-        return super.facilityToString()+ " ," +
+        return serviceId+" ,"+
+                super.facilityToString()+ " ," +
                 freeServices;
     }
 }

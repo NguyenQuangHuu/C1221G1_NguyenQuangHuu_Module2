@@ -74,7 +74,7 @@ public class PersonControllers {
         }
         System.out.println("Your choice:");
         int gender = Integer.parseInt(sc.nextLine());
-        return Gender.values()[gender];
+        return Gender.values()[gender-1];
     }
 
     public String passportInput() {
