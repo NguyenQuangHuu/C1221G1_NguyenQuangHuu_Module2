@@ -21,12 +21,11 @@ public class BookingComparator implements Comparator<Booking> {
             return -1;
         }else{
             if(endDateO1.compareTo(endDateO2)>0){
-                return 1;
-            }else if(endDateO1.compareTo(endDateO2)<0){
                 return -1;
+            }else if(endDateO1.compareTo(endDateO2)<0){
+                return 1;
             }else{
-                return 0;
-
+                return 1;
             }
         }
     }

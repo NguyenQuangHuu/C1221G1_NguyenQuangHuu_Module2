@@ -6,6 +6,7 @@ import case_study_module2.utils.Validate;
 import java.util.Scanner;
 
 public class FacilityController {
+
     Scanner sc = new Scanner(System.in);
     Validate validate = new Validate();
 
@@ -14,6 +15,7 @@ public class FacilityController {
     protected double rentExpense;
     protected int maximumCapacity;
     protected RentType rentType;
+
 
     public void facilityInformationInput(){
         serviceName = serviceNameInput();

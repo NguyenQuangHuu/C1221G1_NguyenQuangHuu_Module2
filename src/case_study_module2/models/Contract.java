@@ -1,17 +1,19 @@
 package case_study_module2.models;
 
+import case_study_module2.models.person.Customer;
+
 public class Contract {
     private String contractId;
-    private String bookingId;
+    private Booking bookingId;
     private double customerDeposits;
     private double totalPayment;
-    private String customerId;
+    private Customer customerId;
 
 
     public Contract() {
     }
 
-    public Contract(String contractId, String bookingId, double customerDeposits, double totalPayment, String customerId) {
+    public Contract(String contractId, Booking bookingId, double customerDeposits, double totalPayment, Customer customerId) {
         this.contractId = contractId;
         this.bookingId = bookingId;
         this.customerDeposits = customerDeposits;
@@ -27,12 +29,20 @@ public class Contract {
         this.contractId = contractId;
     }
 
-    public String getBookingId() {
+    public Booking getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(String bookingId) {
+    public void setBookingId(Booking bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public void setCustomerId(Customer customerId) {
+        this.customerId = customerId;
+    }
+
+    public Customer getCustomerId() {
+        return customerId;
     }
 
     public double getCustomerDeposits() {
@@ -51,13 +61,6 @@ public class Contract {
         this.totalPayment = totalPayment;
     }
 
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
 
     @Override
     public String toString() {
@@ -72,9 +75,9 @@ public class Contract {
 
     public String contractToString(){
         return customerId+
-                " ,"+bookingId+
+                " ,"+bookingId.getBookingId()+
                 " ,"+customerDeposits+
                 " ,"+totalPayment+
-                " ,"+customerId;
+                " ,"+customerId.getId();
     }
 }

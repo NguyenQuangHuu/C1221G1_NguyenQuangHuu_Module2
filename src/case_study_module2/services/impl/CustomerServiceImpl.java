@@ -6,7 +6,6 @@ import case_study_module2.models.person.Customer;
 import case_study_module2.services.ICustomerService;
 import case_study_module2.utils.ReadAndWriteFile;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -60,7 +59,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public void show() {
         System.out.println("Customer List:\n");
         for (int i = 0; i < customerArrayList.size(); i++) {
-            System.out.println(i+""+customerArrayList.get(i));
+            System.out.println("No."+i+" : "+customerArrayList.get(i));
         }
     }
 

@@ -2,14 +2,14 @@ package case_study_module2.models.facility;
 
 import case_study_module2.models.enums.RentType;
 
-public class Room extends Facility{
+public class Room extends Facility {
     private String serviceId;
     private String freeServices;
 
     public Room() {
     }
 
-    public Room(String serviceId, String serviceName, double usableArea, double rentExpense, int maximumCapacity, RentType rentType,String freeServices) {
+    public Room(String serviceId, String serviceName, double usableArea, double rentExpense, int maximumCapacity, RentType rentType, String freeServices) {
         super(serviceName, usableArea, rentExpense, maximumCapacity, rentType);
         this.serviceId = serviceId;
         this.freeServices = freeServices;
@@ -34,15 +34,18 @@ public class Room extends Facility{
 
     @Override
     public String toString() {
-        return super.toString()+" , Room{" +
-                "freeServices='" + freeServices + '\'' +
-                '}';
+        return
+                super.toString() +
+                        " , Room{" +
+                        "serviceId ='" + serviceId + '\'' +
+                        "freeServices='" + freeServices + '\'' +
+                        '}';
     }
 
     @Override
     public String facilityToString() {
-        return serviceId+" ,"+
-                super.facilityToString()+ " ," +
+        return serviceId + " ," +
+                super.facilityToString() + " ," +
                 freeServices;
     }
 }

@@ -9,6 +9,8 @@ import case_study_module2.utils.BookingComparator;
 import case_study_module2.utils.ReadAndWriteFile;
 import case_study_module2.utils.Validate;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class BookingController {
@@ -16,7 +18,7 @@ public class BookingController {
     protected int idBooking;
     protected String startDay;
     protected String endDay;
-    protected String customerId;
+    protected Customer customerId;
     protected Facility serviceName;
     protected RentType rentType;
 
@@ -61,7 +63,8 @@ public class BookingController {
     public String endDayInput(){
         System.out.print("Enter end day rent with format dd/MM/yyyy : ");
         String endDay = sc.nextLine();
-        while (!validate.validateDate(endDay)){
+
+        while (!validate.validateDate(endDay) ){
             System.out.print("Wrong input format day! Re-type: ");
             endDay = sc.nextLine();
         }
@@ -69,11 +72,12 @@ public class BookingController {
     }
 
 
-    public String customerIdInput(){
+    public Customer customerIdInput(){
         customerList.forEach(System.out::println);
         System.out.println("Enter customer id");
         String customerId = sc.nextLine();
         boolean check = false;
+        Customer customerResult = null;
         while(!check){
             while("".equals(customerId)){
                 System.out.println("Please do not skip this field");
@@ -82,6 +86,7 @@ public class BookingController {
             for (Customer customer:
                  customerList) {
                 if(customerId.equals(customer.getId())){
+                    customerResult = customer;
                     check = true;
                     break;
                 }
@@ -92,7 +97,7 @@ public class BookingController {
             }
         }
 
-        return customerId;
+        return customerResult;
     }
 
 

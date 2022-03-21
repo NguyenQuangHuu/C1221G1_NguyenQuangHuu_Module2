@@ -12,13 +12,12 @@ public class BookingServiceImpl implements IBookingService {
     final String BOOKINGS_FILE = "src\\case_study_module2\\data\\bookings.csv";
     BookingController bookingController = new BookingController();
     ReadAndWriteFile readAndWriteFile = new ReadAndWriteFile();
-    Set<Booking> bookingList = readAndWriteFile.readFileBooking(BOOKINGS_FILE);
-    Set<Booking> bookingSet = new TreeSet<>(new BookingComparator());
+
+    Set<Booking> bookingSet = readAndWriteFile.readFileBooking(BOOKINGS_FILE);
 
     @Override
     public void add() {
         Booking book = bookingController.addBooking();
-        bookingList.add(book);
         bookingSet.add(book);
         System.out.println("Create new success");
         readAndWriteFile.writeBookingFile(BOOKINGS_FILE,bookingController.writeBookingToCSV(bookingSet));
@@ -60,7 +59,7 @@ public class BookingServiceImpl implements IBookingService {
     }
 
     public void display(){
-        bookingController.displayBooking(bookingList);
+        bookingController.displayBooking(bookingSet);
     }
 
 }

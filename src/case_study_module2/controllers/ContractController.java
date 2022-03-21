@@ -8,27 +8,27 @@ import case_study_module2.services.IContractService;
 import case_study_module2.utils.ReadAndWriteFile;
 import case_study_module2.utils.Validate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class ContractController  {
     Scanner sc  = new Scanner(System.in);
     ReadAndWriteFile readAndWriteFile = new ReadAndWriteFile();
-    Validate validate = new Validate();
     final String BOOKINGS_FILE = "src\\case_study_module2\\data\\bookings.csv";
     final String CUSTOMERS_FILE = "src\\case_study_module2\\data\\customers.csv";
-    Set<Booking> bookingList=  readAndWriteFile.readFileBooking(BOOKINGS_FILE);
+    Validate validate = new Validate();
     List<Customer> customerList = readAndWriteFile.readFileCustomer(CUSTOMERS_FILE);
-    public Contract inputContract(){
-        String contractId = contractIdInput();
-        String bookingId = bookingIdInput();
-        double customerDeposits = depositInput();
-        double totalPayment = totalPayment();
-        String customerId = customerId();
-        return new Contract(contractId, bookingId, customerDeposits, totalPayment, customerId);
-    }
+    Set<Booking> bookingList = readAndWriteFile.readFileBooking(BOOKINGS_FILE);
+
+
+//    public void inputContract() {
+//
+//        String contractId = contractIdInput();
+//        double customerDeposits = depositInput();
+//        double totalPayment = totalPayment();
+////        Contract contract = new Contract(contractId, booking, customerDeposits, totalPayment, customerId);
+////        System.out.println("Create new contract completed " + contract.toString());
+//
+//    }
 
 
     public String contractIdInput(){
@@ -41,7 +41,7 @@ public class ContractController  {
         return contractId;
     }
 
-    public String bookingIdInput(){
+    public Booking bookingInput(){
         System.out.println("Booking List ID: ");
         for (Booking booking:
              bookingList) {
@@ -51,13 +51,15 @@ public class ContractController  {
         String bookingId = sc.nextLine();
 
         boolean exist = false;
+        Booking bookingResult = null;
         while (!exist){
-            while(bookingId==null){
+            while(bookingId==null || !validate.positiveNumberValidate(bookingId)){
                 System.out.println("Wrong input! Re-type");
                 bookingId = sc.nextLine();
             }
             for (Booking booking : bookingList) {
-                if (bookingId.equals(booking.getBookingId())) {
+                if (Integer.parseInt(bookingId) == booking.getBookingId()) {
+                    bookingResult = booking;
                     exist = true;
                     break;
                 }
@@ -68,7 +70,7 @@ public class ContractController  {
             }
         }
 
-        return bookingId;
+        return bookingResult;
 
     }
 
@@ -88,23 +90,25 @@ public class ContractController  {
         while (!validate.positiveTensNumberValidate(total)){
             total = sc.nextLine();
         }
-        return Double.parseDouble(total) - depositInput();
+        return Double.parseDouble(total);
     }
 
-    public String customerId(){
+    public Customer customerInput(){
         System.out.println("Customer ID list:");
         customerList.forEach(System.out::println);
         System.out.print("Your input: ");
         String customerId = sc.nextLine();
         boolean exist = false;
+        Customer customerResult = null;
         while (!exist){
-            while (customerId.equals("")){
+            while (("").equals(customerId)){
                 System.out.print("Wrong format ! Please Re-type: ");
                 customerId = sc.nextLine();
             }
             for (Customer customer:
                  customerList) {
                 if(customerId.equals(customer.getId())){
+                    customerResult =customer;
                     exist = true;
                     break;
                 }
@@ -115,7 +119,7 @@ public class ContractController  {
             }
 
         }
-        return customerId;
+        return customerResult;
     }
 
 
@@ -134,7 +138,7 @@ public class ContractController  {
         }
         switch (choice){
             case "1":
-                String bookingIdChange = bookingIdInput();
+                Booking bookingIdChange = bookingInput();
                 contract.setBookingId(bookingIdChange);
                 break;
             case "2":
@@ -146,8 +150,8 @@ public class ContractController  {
                 contract.setTotalPayment(totalPaymentChange);
                 break;
             case "4":
-                String customerIdChange = customerId();
-                contract.setContractId(customerIdChange);
+                Customer customerIdChange = customerInput();
+                contract.setCustomerId(customerIdChange);
                 break;
         }
 
@@ -156,7 +160,11 @@ public class ContractController  {
 
     public void displayContract(List<Contract> contractList){
         System.out.println("Contract list");
-        contractList.forEach(System.out::println);
+        for (Contract contract:
+             contractList) {
+            System.out.println(contract.getBookingId().getFacilityName().getServiceName()+", booking by :"+contract.getCustomerId().getFullName()+
+                    ", on :"+contract.getBookingId().getStartsDay());
+        }
     }
 
     public List<String> writeContractToCSV(List<Contract> contractList){

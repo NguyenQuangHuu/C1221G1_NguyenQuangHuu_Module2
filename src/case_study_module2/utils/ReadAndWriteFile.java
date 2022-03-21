@@ -40,7 +40,6 @@ public class ReadAndWriteFile {
             bufferedWriter = new BufferedWriter(fileWriter);
             for (String str :
                     list) {
-
                 bufferedWriter.write(str);
                 bufferedWriter.newLine();
             }
@@ -112,7 +111,7 @@ public class ReadAndWriteFile {
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
             String line = null;
-            String[] strings = new String[10];
+            String[] strings;
             while ((line = bufferedReader.readLine()) != null) {
                 strings = line.split(" ,");
                 employeeList.add(new Employee(strings[0], strings[1], strings[2], Gender.valueOf(strings[3]), strings[4], strings[5], strings[6], Levels.valueOf(strings[7]), Position.valueOf(strings[8]), Double.parseDouble(strings[9])));
@@ -235,7 +234,7 @@ public class ReadAndWriteFile {
             String[] strings;
             while ((line = bufferedReader.readLine()) != null) {
                 strings = line.split(" ,");
-                rooms.add(new Room(strings[0],strings[1],Double.parseDouble(strings[2]),Integer.parseInt(strings[3]),Integer.parseInt(strings[4]),RentType.valueOf(strings[5]),strings[6]));
+                rooms.add(new Room(strings[0],strings[1],Double.parseDouble(strings[2]),Double.parseDouble(strings[3]),Integer.parseInt(strings[4]),RentType.valueOf(strings[5]),strings[6]));
             }
             ;
         } catch (IOException e) {
@@ -265,7 +264,7 @@ public class ReadAndWriteFile {
             String[] strings;
             while ((line = bufferedReader.readLine()) != null) {
                 strings = line.split(" ,");
-                bookings.add(new Booking(Integer.parseInt(strings[0]),strings[1],strings[2],strings[3], this.convert(strings[4]),RentType.valueOf(strings[5])));
+                bookings.add(new Booking(Integer.parseInt(strings[0]),strings[1],strings[2],this.convertCustomer(strings[3]), this.convertFacility(strings[4]),RentType.valueOf(strings[5])));
             }
             ;
         } catch (IOException e) {
@@ -275,7 +274,7 @@ public class ReadAndWriteFile {
         return bookings;
     }
 
-    public Facility convert(String str){
+    public Facility convertFacility(String str){
         List<Facility> facilityList = new ArrayList<>();
         facilityList.addAll(this.readFileVilla(VILLAS_FILE));
         facilityList.addAll(this.readFileHouse(HOUSE_FILE));
@@ -289,6 +288,17 @@ public class ReadAndWriteFile {
             }
         }
         return  result;
+    }
+
+    public Customer convertCustomer(String id){
+        List<Customer> customerList = this.readFileCustomer(CUSTOMERS_FILE);
+        Customer customer = null;
+        for(Customer customer1:customerList){
+            if  (id.equals(customer1.getId())) {
+                customer = customer1;
+            }
+        }
+        return customer;
     }
 
 
@@ -313,7 +323,7 @@ public class ReadAndWriteFile {
             String[] strings;
             while ((line = bufferedReader.readLine()) != null) {
                 strings = line.split(" ,");
-                contracts.add(new Contract(strings[0],strings[1],Double.parseDouble(strings[2]),Double.parseDouble(strings[3]),strings[4]));
+                contracts.add(new Contract(strings[0],this.bookingConvert(strings[1]),Double.parseDouble(strings[2]),Double.parseDouble(strings[3]),this.convertCustomer(strings[4])));
             }
             ;
         } catch (IOException e) {
@@ -321,6 +331,29 @@ public class ReadAndWriteFile {
         }
 
         return contracts;
+    }
+
+    public Booking bookingConvert(String str){
+        Set<Booking> bookingSet = this.readFileBooking(BOOKINGS_FILE);
+        Booking bookingResult = null;
+        for (Booking booking:
+             bookingSet) {
+            if(Integer.parseInt(str) == (booking.getBookingId())){
+                bookingResult = booking;
+            }
+        }
+        return bookingResult;
+    }
+
+    public Customer customerConvert(String str){
+        List<Customer> customerList = this.readFileCustomer(CUSTOMERS_FILE);
+        Customer customerResult = null;
+        for(Customer customer :customerList){
+            if(str.equals(customer.getId())){
+                customerResult = customer;
+            }
+        }
+        return customerResult;
     }
 
 

@@ -2,23 +2,26 @@ package case_study_module2.models;
 
 import case_study_module2.models.enums.RentType;
 import case_study_module2.models.facility.Facility;
+import case_study_module2.models.person.Customer;
+
+import java.util.Objects;
 
 public class Booking {
     private int bookingId;
     private String startsDay;
     private String endsDay;
-    private String customerId;
+    private Customer customer;
     private Facility facilityName;
     private RentType typeService;
 
     public Booking() {
     }
 
-    public Booking(int bookingId, String startsDay, String endsDay, String customerId, Facility facilityName, RentType typeService) {
+    public Booking(int bookingId, String startsDay, String endsDay, Customer customer, Facility facilityName, RentType typeService) {
         this.bookingId = bookingId;
         this.startsDay = startsDay;
         this.endsDay = endsDay;
-        this.customerId = customerId;
+        this.customer = customer;
         this.facilityName = facilityName;
         this.typeService = typeService;
     }
@@ -47,12 +50,12 @@ public class Booking {
         this.endsDay = endsDay;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Facility getFacilityName() {
@@ -77,18 +80,35 @@ public class Booking {
                 "bookingId='" + bookingId + '\'' +
                 ", startsDay='" + startsDay + '\'' +
                 ", endsDay='" + endsDay + '\'' +
-                ", customerId='" + customerId + '\'' +
+                ", customerId='" + customer + '\'' +
                 ", serviceName='" + facilityName + '\'' +
                 ", typeService=" + typeService +
                 '}';
     }
 
+
+
     public String bookingToString(){
     return bookingId +
                 " ," + startsDay +
                 " ," + endsDay +
-                " ," + customerId +
+                " ," + customer.getId() +
                 " ," + facilityName.getServiceName() +
                 " ," + typeService;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Booking)) return false;
+        Booking booking = (Booking) o;
+        return bookingId == booking.bookingId &&
+                startsDay.equals(booking.startsDay) &&
+                endsDay.equals(booking.endsDay);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookingId, startsDay, endsDay);
     }
 }
