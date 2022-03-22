@@ -74,7 +74,7 @@ public class Contract {
     }
 
     public String contractToString(){
-        return customerId+
+        return contractId+
                 " ,"+bookingId.getBookingId()+
                 " ,"+customerDeposits+
                 " ,"+totalPayment+
