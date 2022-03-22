@@ -15,6 +15,7 @@ public class FuramaController {
     IFacilityService facilityService = new FacilityServiceImpl();
     IBookingService bookingService =  new BookingServiceImpl();
     IContractService contractService = new ContractServiceImpl();
+    IPromotionServices promotionServices = new PromotionImpl();
     public void displayMainMenu(){
         int choice = -1;
 
@@ -187,8 +188,8 @@ public class FuramaController {
                 choosePromotion = sc.nextLine();
             }
             switch (choosePromotion){
-                case "1":break;
-                case "2":break;
+                case "1":promotionServices.displayCustomer();break;
+                case "2":promotionServices.displayPromotionCode();break;
                 case "0":break;
                 default:
                     System.out.println("Wrong input ! Re-Type");

@@ -2,6 +2,8 @@ package case_study_module2.models.person;
 
 import case_study_module2.models.enums.Gender;
 
+import java.util.Objects;
+
 public abstract class Person {
     private String id;
     private String fullName;
@@ -101,5 +103,18 @@ public abstract class Person {
                 " ," + this.getPassportID() +
                 " ," + this.getPhoneNumber() +
                 " ,"+this.getEmail();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return id.equals(person.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

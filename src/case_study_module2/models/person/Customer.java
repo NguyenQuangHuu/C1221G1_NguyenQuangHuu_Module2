@@ -48,4 +48,6 @@ public class Customer extends Person{
                 " ,"+this.getTypeMembership()+
                 " ,"+this.getAddress();
     }
+
+
 }
